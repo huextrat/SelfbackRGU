@@ -1,0 +1,2 @@
+include ':mobile', ':wear', ':dsp-collection'
+include ':opencv'
