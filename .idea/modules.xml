@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TraxvivityDatabaseAdmin_huextrat.iml" filepath="$PROJECT_DIR$/TraxvivityDatabaseAdmin_huextrat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TraxivityDatabaseAdmin_huextrat.iml" filepath="$PROJECT_DIR$/TraxivityDatabaseAdmin_huextrat.iml" />
       <module fileurl="file://$PROJECT_DIR$/dsp-collection/dsp-collection.iml" filepath="$PROJECT_DIR$/dsp-collection/dsp-collection.iml" />
       <module fileurl="file://$PROJECT_DIR$/mobile/mobile.iml" filepath="$PROJECT_DIR$/mobile/mobile.iml" />
       <module fileurl="file://$PROJECT_DIR$/opencv/opencv.iml" filepath="$PROJECT_DIR$/opencv/opencv.iml" />

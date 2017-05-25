@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private DatabaseReference mDataBase;
     private CharSequence Titles[]={"Day","Week","Month"};
+    private String usernameString, emailString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +98,8 @@ public class MainActivity extends AppCompatActivity
                             if (child.getKey().equals(userId)) {
                                 username.setText(child.child("username").getValue().toString());
                                 email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+                                usernameString = String.valueOf(username.getText());
+                                emailString = String.valueOf(email.getText());
                             }
                         }
                     }
@@ -137,7 +140,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(getApplicationContext(), GoalInputActivity.class));
         }
         else if (id == R.id.nav_admin) {
-            startActivity(new Intent(getApplicationContext(), MainMenu.class));
+            if(emailString.equals("admin@gmail.com") && usernameString.equals("Admin")) {
+                startActivity(new Intent(getApplicationContext(), MainMenu.class));
+            }
         }
         else if (id == R.id.nav_logout) {
             stopService(new Intent(this, ActivityRecognitionService.class));

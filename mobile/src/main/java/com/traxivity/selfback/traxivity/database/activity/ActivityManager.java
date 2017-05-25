@@ -167,14 +167,20 @@ public class ActivityManager {
 
     public Map<Integer, Integer> getTotalStepsDayByHours(Date wantedDate) {
         Map<Integer, Integer> stepsDayByHours = new HashMap<>();
+
+        int lastHoursRange = 0;
+        int sumStepsByHours = 0;
+
         realm = Realm.getDefaultInstance();
         List<DbActivity> results = getAllActivityDay(wantedDate);
         for(DbActivity activity : results){
-            if(!stepsDayByHours.containsKey(activity.getHoursRange())) {
-                stepsDayByHours.put(activity.getHoursRange(), activity.getNbSteps());
+            if(activity.getHoursRange() == lastHoursRange){
+                sumStepsByHours = sumStepsByHours + activity.getNbSteps();
             }
             else {
-                stepsDayByHours.put(activity.getHoursRange(), stepsDayByHours.get(activity.getHoursRange()) + activity.getNbSteps());
+                stepsDayByHours.put(lastHoursRange, sumStepsByHours);
+                sumStepsByHours = 0;
+                lastHoursRange = activity.getHoursRange();
             }
         }
         return stepsDayByHours;

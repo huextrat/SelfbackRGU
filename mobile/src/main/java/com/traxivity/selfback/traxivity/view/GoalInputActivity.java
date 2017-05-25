@@ -231,7 +231,6 @@ public class GoalInputActivity extends AppCompatActivity {
         Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
         startActivityForResult(myIntent, 0);
         return true;
-
     }
 
 }
