@@ -1,8 +1,8 @@
-package com.traxivity.selfback.traxivity.admin.Controller;
+package com.traxivity.selfback.traxivity.admin.controller;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.traxivity.selfback.traxivity.admin.Model.ActivityToSteps;
+import com.traxivity.selfback.traxivity.admin.model.ActivityToSteps;
 
 /**
  * Created by Alexandre on 16/05/2017.

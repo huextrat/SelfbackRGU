@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Activities;
+package com.traxivity.selfback.traxivity.admin.view.Activities;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -21,12 +21,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.ConfirmationDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Confirmation;
-import com.traxivity.selfback.traxivity.admin.View.ConfirmationAdapter;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDeleteDialog;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.newConfirmationDialog;
-import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
+import com.traxivity.selfback.traxivity.admin.controller.ConfirmationDAO;
+import com.traxivity.selfback.traxivity.admin.model.Confirmation;
+import com.traxivity.selfback.traxivity.admin.view.ConfirmationAdapter;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDeleteDialog;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.newConfirmationDialog;
 
 import java.util.ArrayList;
 

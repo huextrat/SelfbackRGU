@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Activities;
+package com.traxivity.selfback.traxivity.admin.view.Activities;
 
 import android.app.DialogFragment;
 import android.graphics.Color;
@@ -17,15 +17,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.MessageDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Message;
-import com.traxivity.selfback.traxivity.admin.Model.Quote;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.newCategoryDialog;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.newQuoteDialog;
-import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
+import com.traxivity.selfback.traxivity.admin.controller.MessageDAO;
+import com.traxivity.selfback.traxivity.admin.model.Message;
+import com.traxivity.selfback.traxivity.admin.model.Quote;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.newCategoryDialog;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.newQuoteDialog;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 
 public class NewMessage extends AppCompatActivity {
 

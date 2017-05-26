@@ -1,19 +1,18 @@
-package com.traxivity.selfback.traxivity.admin.View.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.Dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.InformationDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Information;
+import com.traxivity.selfback.traxivity.admin.controller.InformationDAO;
+import com.traxivity.selfback.traxivity.admin.model.Information;
 
 /**
  * Created by Alexandre on 22/05/2017.

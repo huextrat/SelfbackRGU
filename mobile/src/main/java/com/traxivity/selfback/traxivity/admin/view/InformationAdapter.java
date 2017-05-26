@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View;
+package com.traxivity.selfback.traxivity.admin.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,18 +8,18 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Model.Confirmation;
+import com.traxivity.selfback.traxivity.admin.model.Information;
 
 import java.util.ArrayList;
 
 /**
- * Created by Alexandre on 25/05/2017.
+ * Created by Alexandre on 22/05/2017.
  */
 
-public class ConfirmationAdapter extends ArrayAdapter<Confirmation> {
+public class InformationAdapter extends ArrayAdapter<Information> {
 
-    public ConfirmationAdapter(Context context, ArrayList<Confirmation> confirmations){
-        super(context, 0, confirmations);
+    public InformationAdapter(Context context, ArrayList<Information> informations){
+        super(context, 0, informations);
     }
 
     private class MyViewHolder{
@@ -32,18 +32,18 @@ public class ConfirmationAdapter extends ArrayAdapter<Confirmation> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_list_messages,parent, false);
         }
 
-        ConfirmationAdapter.MyViewHolder viewHolder = (ConfirmationAdapter.MyViewHolder) convertView.getTag();
+        InformationAdapter.MyViewHolder viewHolder = (InformationAdapter.MyViewHolder) convertView.getTag();
         if(viewHolder == null){
-            viewHolder = new ConfirmationAdapter.MyViewHolder();
+            viewHolder = new InformationAdapter.MyViewHolder();
             viewHolder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
             convertView.setTag(viewHolder);
         }
 
         //getItem(position) va récupérer l'item [position] de la List<Tweet> tweets
-        Confirmation confirmation = getItem(position);
+        Information information = getItem(position);
 
         //il ne reste plus qu'à remplir notre vue
-        viewHolder.tv_content.setText(confirmation.getContent());
+        viewHolder.tv_content.setText(information.getContent());
 
         return convertView;
     }

@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Activities;
+package com.traxivity.selfback.traxivity.admin.view.Activities;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -18,16 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.InformationDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Information;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDeleteDialog;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDetailsDialog;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.newInformationDialog;
+import com.traxivity.selfback.traxivity.admin.controller.InformationDAO;
+import com.traxivity.selfback.traxivity.admin.model.Information;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDeleteDialog;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDetailsDialog;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.newInformationDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
-import com.traxivity.selfback.traxivity.admin.View.InformationAdapter;
-import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
+import com.traxivity.selfback.traxivity.admin.view.InformationAdapter;
 
 import java.util.ArrayList;
 

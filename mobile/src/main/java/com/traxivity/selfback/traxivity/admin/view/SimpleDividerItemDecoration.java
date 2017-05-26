@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View;
+package com.traxivity.selfback.traxivity.admin.view;
 
 import android.content.Context;
 import android.graphics.Canvas;

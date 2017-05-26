@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Activities;
+package com.traxivity.selfback.traxivity.admin.view.Activities;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -10,9 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.ActivityConversionDAO;
-import com.traxivity.selfback.traxivity.admin.Model.ActivityToSteps;
-import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
+import com.traxivity.selfback.traxivity.admin.controller.ActivityConversionDAO;
+import com.traxivity.selfback.traxivity.admin.model.ActivityToSteps;
 
 public class ActivityConversion extends AppCompatActivity {
 

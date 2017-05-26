@@ -1,9 +1,8 @@
-package com.traxivity.selfback.traxivity.admin.View.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.Dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
@@ -11,13 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.ConfirmationDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Confirmation;
-import com.traxivity.selfback.traxivity.admin.View.Activities.ConfirmationManager;
+import com.traxivity.selfback.traxivity.admin.controller.ConfirmationDAO;
+import com.traxivity.selfback.traxivity.admin.model.Confirmation;
+import com.traxivity.selfback.traxivity.admin.view.Activities.ConfirmationManager;
 
 /**
  * Created by Alexandre on 25/05/2017.

@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Activities;
+package com.traxivity.selfback.traxivity.admin.view.Activities;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -21,16 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.MessageDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Message;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDeleteDialog;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDetailsDialog;
-import com.traxivity.selfback.traxivity.admin.View.Dialogs.newCategoryDialog;
+import com.traxivity.selfback.traxivity.admin.controller.MessageDAO;
+import com.traxivity.selfback.traxivity.admin.model.Message;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDeleteDialog;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDetailsDialog;
+import com.traxivity.selfback.traxivity.admin.view.Dialogs.newCategoryDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
-import com.traxivity.selfback.traxivity.admin.View.MessagesAdapter;
-import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
+import com.traxivity.selfback.traxivity.admin.view.MessagesAdapter;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

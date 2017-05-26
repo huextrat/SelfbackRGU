@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.Dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -11,9 +11,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Model.Information;
-import com.traxivity.selfback.traxivity.admin.Model.Message;
-import com.traxivity.selfback.traxivity.admin.View.Activities.NewMessage;
+import com.traxivity.selfback.traxivity.admin.model.Information;
+import com.traxivity.selfback.traxivity.admin.model.Message;
+import com.traxivity.selfback.traxivity.admin.view.Activities.NewMessage;
 
 /**
  * Created by Alexandre on 05/05/2017.

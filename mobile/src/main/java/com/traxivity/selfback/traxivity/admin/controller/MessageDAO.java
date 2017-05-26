@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.Controller;
+package com.traxivity.selfback.traxivity.admin.controller;
 
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.database.DataSnapshot;
@@ -6,8 +6,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.traxivity.selfback.traxivity.admin.Model.Message;
-import com.traxivity.selfback.traxivity.admin.View.Activities.MessagesManager;
+import com.traxivity.selfback.traxivity.admin.model.Message;
+import com.traxivity.selfback.traxivity.admin.view.Activities.MessagesManager;
 
 import java.util.ArrayList;
 

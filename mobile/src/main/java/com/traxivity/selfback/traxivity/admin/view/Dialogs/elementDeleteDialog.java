@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.Dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Controller.ConfirmationDAO;
-import com.traxivity.selfback.traxivity.admin.Controller.InformationDAO;
-import com.traxivity.selfback.traxivity.admin.Controller.MessageDAO;
-import com.traxivity.selfback.traxivity.admin.Model.Confirmation;
-import com.traxivity.selfback.traxivity.admin.Model.Information;
-import com.traxivity.selfback.traxivity.admin.Model.Message;
+import com.traxivity.selfback.traxivity.admin.controller.ConfirmationDAO;
+import com.traxivity.selfback.traxivity.admin.controller.InformationDAO;
+import com.traxivity.selfback.traxivity.admin.controller.MessageDAO;
+import com.traxivity.selfback.traxivity.admin.model.Confirmation;
+import com.traxivity.selfback.traxivity.admin.model.Information;
+import com.traxivity.selfback.traxivity.admin.model.Message;
 
 /**
  * Created by Alexandre on 16/05/2017.

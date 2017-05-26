@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.Model;
+package com.traxivity.selfback.traxivity.admin.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

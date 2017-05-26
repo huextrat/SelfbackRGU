@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.View;
+package com.traxivity.selfback.traxivity.admin.view;
 
 /**
  * Created by Alexandre on 05/05/2017.
@@ -12,7 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.Model.Message;
+import com.traxivity.selfback.traxivity.admin.model.Message;
 
 import java.util.ArrayList;
 

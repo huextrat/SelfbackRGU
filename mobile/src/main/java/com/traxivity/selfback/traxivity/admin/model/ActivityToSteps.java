@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.Model;
+package com.traxivity.selfback.traxivity.admin.model;
 
 /**
  * Created by Alexandre on 17/05/2017.
