@@ -3,7 +3,7 @@ package com.traxivity.selfback.traxivity.admin.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.traxivity.selfback.traxivity.admin.view.Activities.MessagesManager;
+import com.traxivity.selfback.traxivity.admin.view.activities.MessagesManager;
 
 
 /**

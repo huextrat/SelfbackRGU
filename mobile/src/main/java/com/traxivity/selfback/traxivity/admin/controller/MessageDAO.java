@@ -7,7 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.traxivity.selfback.traxivity.admin.model.Message;
-import com.traxivity.selfback.traxivity.admin.view.Activities.MessagesManager;
+import com.traxivity.selfback.traxivity.admin.view.activities.MessagesManager;
 
 import java.util.ArrayList;
 

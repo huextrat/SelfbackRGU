@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.view.Activities;
+package com.traxivity.selfback.traxivity.admin.view.activities;
 
 import android.app.DialogFragment;
 import android.content.Context;
@@ -23,9 +23,9 @@ import android.widget.Toast;
 import com.traxivity.selfback.traxivity.R;
 import com.traxivity.selfback.traxivity.admin.controller.MessageDAO;
 import com.traxivity.selfback.traxivity.admin.model.Message;
-import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDeleteDialog;
-import com.traxivity.selfback.traxivity.admin.view.Dialogs.elementDetailsDialog;
-import com.traxivity.selfback.traxivity.admin.view.Dialogs.newCategoryDialog;
+import com.traxivity.selfback.traxivity.admin.view.dialogs.elementDeleteDialog;
+import com.traxivity.selfback.traxivity.admin.view.dialogs.elementDetailsDialog;
+import com.traxivity.selfback.traxivity.admin.view.dialogs.newCategoryDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;

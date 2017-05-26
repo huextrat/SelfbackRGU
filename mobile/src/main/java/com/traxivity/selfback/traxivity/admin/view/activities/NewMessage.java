@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.view.Activities;
+package com.traxivity.selfback.traxivity.admin.view.activities;
 
 import android.app.DialogFragment;
 import android.graphics.Color;
@@ -20,8 +20,8 @@ import com.traxivity.selfback.traxivity.R;
 import com.traxivity.selfback.traxivity.admin.controller.MessageDAO;
 import com.traxivity.selfback.traxivity.admin.model.Message;
 import com.traxivity.selfback.traxivity.admin.model.Quote;
-import com.traxivity.selfback.traxivity.admin.view.Dialogs.newCategoryDialog;
-import com.traxivity.selfback.traxivity.admin.view.Dialogs.newQuoteDialog;
+import com.traxivity.selfback.traxivity.admin.view.dialogs.newCategoryDialog;
+import com.traxivity.selfback.traxivity.admin.view.dialogs.newQuoteDialog;
 
 import java.util.ArrayList;
 

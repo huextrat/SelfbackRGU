@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.view.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.traxivity.selfback.traxivity.R;
-import com.traxivity.selfback.traxivity.admin.view.Activities.MessagesManager;
+import com.traxivity.selfback.traxivity.admin.view.activities.MessagesManager;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

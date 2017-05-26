@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.view.Activities;
+package com.traxivity.selfback.traxivity.admin.view.activities;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;

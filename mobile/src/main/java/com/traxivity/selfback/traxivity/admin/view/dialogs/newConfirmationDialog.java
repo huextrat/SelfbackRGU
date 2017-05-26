@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.view.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -15,7 +15,7 @@ import android.widget.Toast;
 import com.traxivity.selfback.traxivity.R;
 import com.traxivity.selfback.traxivity.admin.controller.ConfirmationDAO;
 import com.traxivity.selfback.traxivity.admin.model.Confirmation;
-import com.traxivity.selfback.traxivity.admin.view.Activities.ConfirmationManager;
+import com.traxivity.selfback.traxivity.admin.view.activities.ConfirmationManager;
 
 /**
  * Created by Alexandre on 25/05/2017.

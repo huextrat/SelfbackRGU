@@ -39,21 +39,21 @@
             android:name=".view.InactivityGoalInput"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".admin.view.Activities.MainMenu"
+            android:name=".admin.view.activities.MainMenu"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".admin.view.Activities.NewMessage"
+            android:name=".admin.view.activities.NewMessage"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".admin.view.Activities.MessagesManager"
+            android:name=".admin.view.activities.MessagesManager"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".admin.view.Activities.ActivityConversion"
+            android:name=".admin.view.activities.ActivityConversion"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".admin.view.Activities.InformationManager"
+            android:name=".admin.view.activities.InformationManager"
             android:theme="@style/AppTheme" />
-        <activity android:name=".admin.view.Activities.ConfirmationManager"
+        <activity android:name=".admin.view.activities.ConfirmationManager"
             android:theme="@style/AppTheme" />
 
         <service android:name=".model.ListenerService">

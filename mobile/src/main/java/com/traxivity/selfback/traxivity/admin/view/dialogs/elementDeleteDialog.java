@@ -1,4 +1,4 @@
-package com.traxivity.selfback.traxivity.admin.view.Dialogs;
+package com.traxivity.selfback.traxivity.admin.view.dialogs;
 
 import android.app.Dialog;
 import android.app.DialogFragment;

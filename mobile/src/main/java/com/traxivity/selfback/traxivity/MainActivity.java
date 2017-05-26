@@ -20,7 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.traxivity.selfback.traxivity.admin.view.Activities.MainMenu;
+import com.traxivity.selfback.traxivity.admin.view.activities.MainMenu;
 import com.traxivity.selfback.traxivity.model.ActivityRecognitionService;
 import com.traxivity.selfback.traxivity.model.ListenerService;
 import com.traxivity.selfback.traxivity.model.SlidingTabLayout;
