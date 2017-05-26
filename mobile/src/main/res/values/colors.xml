@@ -3,4 +3,6 @@
     <color name="colorPrimary">#34cdb4</color>
     <color name="colorPrimaryDark">#00ad91</color>
     <color name="colorAccent">#34cdb4</color>
+
+    <color name="rimBar">#bababa</color>
 </resources>

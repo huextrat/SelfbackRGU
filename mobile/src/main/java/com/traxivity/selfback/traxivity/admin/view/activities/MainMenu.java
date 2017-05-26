@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.traxivity.selfback.traxivity.MainActivity;
 import com.traxivity.selfback.traxivity.R;
 
 public class MainMenu extends AppCompatActivity {
@@ -66,7 +67,8 @@ public class MainMenu extends AppCompatActivity {
         });
     }
     public boolean onOptionsItemSelected(MenuItem item){
-        finish();
+        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivityForResult(myIntent, 0);
         return true;
     }
 }

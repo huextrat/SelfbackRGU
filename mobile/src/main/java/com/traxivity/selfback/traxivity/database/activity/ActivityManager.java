@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.ViewGroup;
 
+import com.google.android.gms.drive.events.ChangeListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -174,23 +176,33 @@ public class ActivityManager {
     public Map<Integer, Integer> getTotalStepsDayByHours(Date wantedDate) {
         Map<Integer, Integer> stepsDayByHours = new HashMap<>();
 
-        realm = Realm.getDefaultInstance();
         List<DbActivity> results = getAllActivityDay(wantedDate);
 
         int lastActivityHoursRange = 999;
         int totalNbSteps = 0;
+        int listSize = results.size();
 
-        for(DbActivity myActivity : results){
-            if(lastActivityHoursRange == myActivity.getHoursRange() || lastActivityHoursRange == 999){
-                totalNbSteps = totalNbSteps+myActivity.getNbSteps();
-                lastActivityHoursRange = myActivity.getHoursRange();
-            }
-            else {
-                stepsDayByHours.put(lastActivityHoursRange,totalNbSteps);
-                lastActivityHoursRange = myActivity.getHoursRange();
-                totalNbSteps = myActivity.getNbSteps();
+        if(results.size() == 1){
+            stepsDayByHours.put(results.get(0).getHoursRange(), results.get(0).getNbSteps());
+        }
+        else {
+            for (DbActivity myActivity : results) {
+                if (lastActivityHoursRange == myActivity.getHoursRange() || lastActivityHoursRange == 999) {
+                    totalNbSteps = totalNbSteps + myActivity.getNbSteps();
+                    lastActivityHoursRange = myActivity.getHoursRange();
+                    listSize = listSize - 1;
+                } else {
+                    stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
+                    lastActivityHoursRange = myActivity.getHoursRange();
+                    totalNbSteps = myActivity.getNbSteps();
+                    listSize = listSize - 1;
+                    if(listSize == 0){
+                        stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
+                    }
+                }
             }
         }
+        Log.d("test",stepsDayByHours.toString());
         return stepsDayByHours;
     }
 

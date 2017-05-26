@@ -30,7 +30,7 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.github.lzyzsd:circleprogress:1.2.1'
+    compile 'com.github.jakob-grabner:Circle-Progress-View:v1.3'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     compile 'com.google.firebase:firebase-auth:10.0.1'
 

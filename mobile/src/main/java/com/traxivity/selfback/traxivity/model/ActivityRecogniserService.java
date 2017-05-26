@@ -21,7 +21,7 @@ import java.util.Date;
 
 public class ActivityRecogniserService extends IntentService {
 
-    private int steps = 1000;
+    private int steps = 10;
     private Handler handler;
     private long lastDateTime = new Date().getTime();
 

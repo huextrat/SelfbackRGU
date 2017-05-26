@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -29,16 +28,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by extra on 22/05/2017.
+ * Created by huextrat.
  */
 
 public class WeeklyTab extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.weekly_tab,container,false);
-
-        DonutProgress weeklyCircle = (DonutProgress) v.findViewById(R.id.circle_progress_week);
-        TextView weeklyGoalTv = (TextView) v.findViewById(R.id.goal_weekly);
 
         Date currentDate = new Date();
 
@@ -65,19 +61,12 @@ public class WeeklyTab extends Fragment {
 
         if (weeklyGoalSteps != null) {
             float stepsNumber = (float) weeklyGoalSteps.getStepsNumber();
-            weeklyGoalTv.setText(Integer.toString(weeklyGoalSteps.getStepsNumber()) + " steps");
-            weeklyCircle.setProgress(managerGoal.goalStatusStepsWeekly(currentDate, managerActivity.getTotalStepsDay(currentDate)));
             LimitLine limitLine = new LimitLine(stepsNumber, "Steps Objective");
             limitLine.setLineColor(Color.CYAN);
             yAxisR.addLimitLine(limitLine);
             yAxisR.setAxisMaximum(stepsNumber*1.5f);
         }
-        else if(weeklyGoalDuration != null){
-            weeklyGoalTv.setText(Double.toString(weeklyGoalDuration.getDuration()) + " seconds");
-            weeklyCircle.setProgress(managerGoal.goalStatusDurationWeekly(currentDate, managerActivity.getTotalActivityDay(currentDate)));
-        }
         else {
-            weeklyGoalTv.setText("No goal set");
             yAxisR.setAxisMaximum(10000f);
         }
 

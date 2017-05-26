@@ -10,32 +10,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.github.lzyzsd.circleprogress.DonutProgress
-            android:id="@+id/circle_progress_week"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            app:donut_text_color="@color/colorPrimary"
-            app:donut_text_size="25dp"
-            app:donut_finished_color="@color/colorPrimary"
-            app:donut_progress="0"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="20dp"
-            android:hint="Your weekly goal :"/>
-
-        <TextView
-            android:id="@+id/goal_weekly"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textSize="15dp"/>
-
-
         <com.github.mikephil.charting.charts.BarChart
             android:layout_width="match_parent"
             android:layout_height="150dp"
