@@ -34,17 +34,18 @@ public class textDialogAccept extends DialogFragment {
         final View view = inflater.inflate(R.layout.text_dialog, null);
         TextView tv1 = (TextView) view.findViewById(R.id.textView);
         if(GoalInputActivity.nbSteps != null){
-            if(GoalInputActivity.isWeek){
+            /*if(GoalInputActivity.isWeek){
                 fullmessage = fullmessage+ GoalInputActivity.nbSteps+" steps for a week do you agree to commit to the set objective ?";
-            }else{
-                fullmessage = fullmessage+ GoalInputActivity.nbSteps+" steps for a day do you agree to commit to the set objective ?";
-            }
+            }else{*/
+            fullmessage = fullmessage+ GoalInputActivity.nbSteps+" steps for each day do you agree to commit to the set objective ?";
+            // }
         }else{
-            if(!GoalInputActivity.isWeek){
-                fullmessage = fullmessage+ GoalInputActivity.nbHours+" h and "+ GoalInputActivity.nbMin+" min for a day do you agree to commit to the set objective ?";
-            }else{
+
+            // if(!GoalInputActivity.isWeek){
+            fullmessage = fullmessage+ GoalInputActivity.nbHours+" h and "+ GoalInputActivity.nbMin+" min for each day do you agree to commit to the set objective ?";
+           /* }else{
                 fullmessage = fullmessage+ GoalInputActivity.nbHours+" h and "+ GoalInputActivity.nbMin+" min for a week do you agree to commit to the set objective ?";
-            }
+            }*/
         }
 
         builder.setView(view)
@@ -55,7 +56,7 @@ public class textDialogAccept extends DialogFragment {
                         DbGoal newGoal = new DbGoal();
 
                         if(GoalInputActivity.nbSteps == null){
-                            if(GoalInputActivity.isWeek){
+                            /*if(GoalInputActivity.isWeek){
                                 Calendar cal = Calendar.getInstance();
                                 cal.setTime(GoalInputActivity.dateD);
                                 cal.add(Calendar.DAY_OF_WEEK, 7);
@@ -63,17 +64,17 @@ public class textDialogAccept extends DialogFragment {
 
                                 manager.insertGoal(newGoal.withDuration(GoalInputActivity.dateD,endTime,GoalInputActivity.nbHours*3600+GoalInputActivity.nbMin*60));
                             }
-                            else {
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(GoalInputActivity.dateD);
-                                cal.add(Calendar.DAY_OF_WEEK, 1);
-                                Date endTime = cal.getTime();
+                            else {*/
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(GoalInputActivity.dateD);
+                            cal.add(Calendar.DAY_OF_WEEK, 1);
+                            Date endTime = cal.getTime();
 
-                                manager.insertGoal(newGoal.withDuration(GoalInputActivity.dateD,endTime,GoalInputActivity.nbHours*3600+GoalInputActivity.nbMin*60));
-                            }
+                            manager.insertGoal(newGoal.withDuration(GoalInputActivity.dateD,endTime,GoalInputActivity.nbHours*3600+GoalInputActivity.nbMin*60));
+                            //}
                         }
                         else {
-                            if(GoalInputActivity.isWeek){
+                           /* if(GoalInputActivity.isWeek){
                                 Calendar cal = Calendar.getInstance();
                                 cal.setTime(GoalInputActivity.dateD);
                                 cal.add(Calendar.DAY_OF_WEEK, 7);
@@ -81,14 +82,14 @@ public class textDialogAccept extends DialogFragment {
 
                                 manager.insertGoal(newGoal.withSteps(GoalInputActivity.dateD,endTime,GoalInputActivity.nbSteps));
                             }
-                            else {
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(GoalInputActivity.dateD);
-                                cal.add(Calendar.DAY_OF_WEEK, 1);
-                                Date endTime = cal.getTime();
+                            else {*/
+                            Calendar cal = Calendar.getInstance();
+                            cal.setTime(GoalInputActivity.dateD);
+                            cal.add(Calendar.DAY_OF_WEEK, 1);
+                            Date endTime = cal.getTime();
 
-                                manager.insertGoal(newGoal.withSteps(GoalInputActivity.dateD,endTime,GoalInputActivity.nbSteps));
-                            }
+                            manager.insertGoal(newGoal.withSteps(GoalInputActivity.dateD,endTime,GoalInputActivity.nbSteps));
+                            //}
                         }
 
                         InactivityGoalInput.dateDeb = GoalInputActivity.dateD;

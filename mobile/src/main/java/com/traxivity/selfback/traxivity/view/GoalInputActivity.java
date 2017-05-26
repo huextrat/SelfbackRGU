@@ -51,15 +51,15 @@ public class GoalInputActivity extends AppCompatActivity {
     Editable stepsEditable;
     Editable minEditable;
     Editable hoursEditable;
-    Button dayButton;
-    Button weekButton;
+    /* Button dayButton;
+     Button weekButton;*/
     TextView hintsText;
     TextInputLayout tipSteps;
     TextInputLayout tipHours;
     TextInputLayout tipMin;
     TextView textDate;
     Boolean launched = false;
-    public static Boolean isWeek = false;
+    // public static Boolean isWeek = false;
     public static Integer nbSteps = null;
     public static Integer nbMin = null;
     public static Integer nbHours = null;
@@ -67,9 +67,9 @@ public class GoalInputActivity extends AppCompatActivity {
     public static final long NB_STEPS_FOR_DAY= 10000;
     public static final long NB_HOUR_FOR_DAY = 1;
     public static final long NB_MIN_FOR_DAY = 20;
-    public static final long NB_STEPS_FOR_WEEK= NB_STEPS_FOR_DAY*7;
+   /* public static final long NB_STEPS_FOR_WEEK= NB_STEPS_FOR_DAY*7;
     public static final long NB_HOUR_FOR_WEEK = NB_HOUR_FOR_DAY*7+NB_MIN_FOR_DAY*7/60;
-    public static final long NB_MIN_FOR_WEEK = NB_MIN_FOR_DAY*7%60;
+    public static final long NB_MIN_FOR_WEEK = NB_MIN_FOR_DAY*7%60; */
 
     public void refreshDate(){
         textDate.setText(df.format(dateD));
@@ -93,8 +93,8 @@ public class GoalInputActivity extends AppCompatActivity {
         rdbSteps = (RadioButton) findViewById(R.id.radioButton5);
         rdbTime = (RadioButton) findViewById(R.id.radioButton4);
         confirm = (Button) findViewById(R.id.appCompatButton3);
-        dayButton = (Button) findViewById(R.id.appCompatButton);
-        weekButton = (Button) findViewById(R.id.appCompatButton2);
+       /* dayButton = (Button) findViewById(R.id.appCompatButton);
+        weekButton = (Button) findViewById(R.id.appCompatButton2);*/
         hintsText = (TextView) findViewById(R.id.textView3);
         hintsText.setText("The average number of steps for a day is "+NB_STEPS_FOR_DAY);
         tipSteps = (TextInputLayout) findViewById(R.id.textInputSteps);
@@ -119,7 +119,7 @@ public class GoalInputActivity extends AppCompatActivity {
             }
         });
 
-
+        /*
         dayButton.setOnClickListener(new View.OnClickListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -132,9 +132,12 @@ public class GoalInputActivity extends AppCompatActivity {
                 weekButton.setBackgroundColor(getResources().getColor(R.color.colorPrimary,null));
                 if(rdbSteps.isChecked()){
                     hintsText.setText("The average number of steps for a day is "+NB_STEPS_FOR_DAY);
+
                 }else{
                     hintsText.setText("The average duration of training for a day is "+NB_HOUR_FOR_DAY +" h "+NB_MIN_FOR_DAY+" min");
+
                 }
+
             }
         });
 
@@ -154,7 +157,7 @@ public class GoalInputActivity extends AppCompatActivity {
                     hintsText.setText("The average duration of training for a week is "+NB_HOUR_FOR_WEEK +" h "+NB_MIN_FOR_WEEK+" min");
                 }
             }
-        });
+        });*/
 
         confirm.setOnClickListener(new View.OnClickListener() {
 
@@ -177,11 +180,11 @@ public class GoalInputActivity extends AppCompatActivity {
         tipSteps.setVisibility(View.VISIBLE);
         rdbTime.setChecked(false);
         relative1.setVisibility(View.INVISIBLE);
-        if(isWeek){
+       /* if(isWeek){
             hintsText.setText("The average number of steps for a week is "+NB_STEPS_FOR_WEEK);
-        }else{
-            hintsText.setText("The average number of steps for a day is "+NB_STEPS_FOR_DAY);
-        }
+        }else{*/
+        hintsText.setText("The average number of steps for a day is "+NB_STEPS_FOR_DAY);
+        //}
 
     }
 
@@ -192,11 +195,11 @@ public class GoalInputActivity extends AppCompatActivity {
         tipMin.setVisibility(View.VISIBLE);
         rdbSteps.setChecked(false);
         stepsEtext.setVisibility(View.INVISIBLE);
-        if(isWeek){
+       /* if(isWeek){
             hintsText.setText("The average  duration of training for a week is "+NB_HOUR_FOR_WEEK+" h "+NB_MIN_FOR_WEEK+" min");
-        }else{
-            hintsText.setText("The average duration of training for a day is "+NB_HOUR_FOR_DAY +" h "+NB_MIN_FOR_DAY+" min");
-        }
+        }else{*/
+        hintsText.setText("The average duration of training for a day is "+NB_HOUR_FOR_DAY +" h "+NB_MIN_FOR_DAY+" min");
+        //}
     }
 
 

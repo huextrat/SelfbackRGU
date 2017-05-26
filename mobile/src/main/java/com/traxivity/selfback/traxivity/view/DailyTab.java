@@ -50,6 +50,21 @@ public class DailyTab extends Fragment {
         Date testDate = new Date(2017,05,24);
         Date currentDate = new Date();
 
+        BarChart graphChart = (BarChart) v.findViewById(R.id.barChart);
+        graphChart.setScaleEnabled(false);
+        graphChart.setDragEnabled(false);
+        graphChart.setPinchZoom(false);
+        graphChart.getDescription().setEnabled(false);
+
+        XAxis xAxis = graphChart.getXAxis();
+        xAxis.setAxisMaximum(24f);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        YAxis yAxisR = graphChart.getAxisRight();
+        yAxisR.setDrawLabels(false); // no axis labels
+        yAxisR.setDrawAxisLine(false); // no axis line
+        yAxisR.setDrawGridLines(false); // no grid lines
+        yAxisR.setDrawZeroLine(true); // draw a zero line
+
         ActivityManager managerActivity = new ActivityManager();
         List<DbActivity> a = managerActivity.getAllActivityRangeDay(testDate,currentDate);
         for(DbActivity activity : a){
@@ -63,6 +78,10 @@ public class DailyTab extends Fragment {
          if (dailyGoalSteps != null) {
             dailyGoalTv.setText(Integer.toString(dailyGoalSteps.getStepsNumber()) + " steps");
             dailyCircle.setProgress(managerGoal.goalStatusStepsDaily(currentDate, managerActivity.getTotalStepsDay(currentDate)));
+             LimitLine limitLine = new LimitLine(dailyGoalSteps.getStepsNumber(), "Steps Objective");
+             limitLine.setLineColor(Color.CYAN);
+             yAxisR.addLimitLine(limitLine);
+             yAxisR.setAxisMaximum(dailyGoalSteps.getStepsNumber()*1.5f);
          }
          else if(dailyGoalDuration != null){
             dailyGoalTv.setText(Double.toString(dailyGoalDuration.getDuration()) + " seconds");
@@ -70,6 +89,7 @@ public class DailyTab extends Fragment {
          }
          else {
             dailyGoalTv.setText("No goal set");
+             yAxisR.setAxisMaximum(10000f);
          }
 
          clearDb.setOnClickListener(new View.OnClickListener() {
@@ -79,41 +99,27 @@ public class DailyTab extends Fragment {
         }
         });
 
-         BarChart graphChart = (BarChart) v.findViewById(R.id.barChart);
-         graphChart.setScaleEnabled(false);
-         graphChart.setDragEnabled(false);
-         graphChart.setPinchZoom(false);
-         graphChart.getDescription().setEnabled(false);
+        List<BarEntry> entries = new ArrayList<>();
+        //readDB to find nb steps per hour
+        Date dateImpl = currentDate;
+        Integer nbsteps;
+        Map<Integer, Integer> mapStepsDayByHour = managerActivity.getTotalStepsDayByHours(currentDate);
+        //PROBLEM HERE
+        for(Integer i=0;i<24;i++) {
+            nbsteps = mapStepsDayByHour.get(i);
 
-         XAxis xAxis = graphChart.getXAxis();
-         xAxis.setAxisMaximum(24f);
-         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-         YAxis yAxisR = graphChart.getAxisRight();
-         yAxisR.setDrawLabels(false); // no axis labels
-         yAxisR.setDrawAxisLine(false); // no axis line
-         yAxisR.setDrawGridLines(false); // no grid lines
-         yAxisR.setDrawZeroLine(true); // draw a zero line
-         LimitLine limitLine = new LimitLine(6000f, "Steps Objective");
-         limitLine.setLineColor(Color.CYAN);
-         yAxisR.addLimitLine(limitLine);
-         yAxisR.setAxisMaximum(10000f);
+            if(nbsteps == null) {
+                entries.add(new BarEntry((float) i, 0f));
+                Log.w("Nbsteps",i.toString());
 
-         List<BarEntry> entries = new ArrayList<>();
-         //readDB to find nb steps per hour
-         Date dateImpl = currentDate;
-         int nbsteps;
-         for(int i=0;i<7;i++) {
-         nbsteps = managerActivity.getTotalStepsDay(dateImpl);
-         entries.add(new BarEntry((float) i, (float) nbsteps));
-         dateImpl = DateUtil.addDays(dateImpl,1);
-         }
+            }else {
+                entries.add(new BarEntry((float) i, (float) nbsteps));
+                Log.w("Nbsteps",nbsteps.toString());
+            }
+        }
 
-         for(int i=0; i<24; i++){
-         /**dayMap.get(i);
-         hours.add(i,);**/
-         }
 
-         BarDataSet set = new BarDataSet(entries, "Activity");
+        BarDataSet set = new BarDataSet(entries, "Activity");
          BarData data = new BarData(set);
          data.setBarWidth(0.9f); // set custom bar width
          graphChart.setData(data);

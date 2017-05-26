@@ -42,24 +42,6 @@ public class WeeklyTab extends Fragment {
 
         Date currentDate = new Date();
 
-        ActivityManager managerActivity = new ActivityManager();
-        GoalManager managerGoal = new GoalManager();
-
-        final DbGoal weeklyGoalSteps = managerGoal.goalStepsWeekly(currentDate);
-        final DbGoal weeklyGoalDuration = managerGoal.goalDurationWeekly(currentDate);
-
-        if (weeklyGoalSteps != null) {
-            weeklyGoalTv.setText(Integer.toString(weeklyGoalSteps.getStepsNumber()) + " steps");
-            weeklyCircle.setProgress(managerGoal.goalStatusStepsWeekly(currentDate, managerActivity.getTotalStepsDay(currentDate)));
-        }
-        else if(weeklyGoalDuration != null){
-            weeklyGoalTv.setText(Double.toString(weeklyGoalDuration.getDuration()) + " seconds");
-            weeklyCircle.setProgress(managerGoal.goalStatusDurationWeekly(currentDate, managerActivity.getTotalActivityDay(currentDate)));
-        }
-        else {
-            weeklyGoalTv.setText("No goal set");
-        }
-
         BarChart graphChart = (BarChart) v.findViewById(R.id.barChart);
         graphChart.setScaleEnabled(false);
         graphChart.setDragEnabled(false);
@@ -74,24 +56,38 @@ public class WeeklyTab extends Fragment {
         yAxisR.setDrawAxisLine(false); // no axis line
         yAxisR.setDrawGridLines(false); // no grid lines
         yAxisR.setDrawZeroLine(true); // draw a zero line
-        LimitLine limitLine = new LimitLine(6000f, "Steps Objective");
-        limitLine.setLineColor(Color.CYAN);
-        yAxisR.addLimitLine(limitLine);
-        yAxisR.setAxisMaximum(10000f);
+
+        ActivityManager managerActivity = new ActivityManager();
+        GoalManager managerGoal = new GoalManager();
+
+        final DbGoal weeklyGoalSteps = managerGoal.goalStepsWeekly(currentDate);
+        final DbGoal weeklyGoalDuration = managerGoal.goalDurationWeekly(currentDate);
+
+        if (weeklyGoalSteps != null) {
+            float stepsNumber = (float) weeklyGoalSteps.getStepsNumber();
+            weeklyGoalTv.setText(Integer.toString(weeklyGoalSteps.getStepsNumber()) + " steps");
+            weeklyCircle.setProgress(managerGoal.goalStatusStepsWeekly(currentDate, managerActivity.getTotalStepsDay(currentDate)));
+            LimitLine limitLine = new LimitLine(stepsNumber, "Steps Objective");
+            limitLine.setLineColor(Color.CYAN);
+            yAxisR.addLimitLine(limitLine);
+            yAxisR.setAxisMaximum(stepsNumber*1.5f);
+        }
+        else if(weeklyGoalDuration != null){
+            weeklyGoalTv.setText(Double.toString(weeklyGoalDuration.getDuration()) + " seconds");
+            weeklyCircle.setProgress(managerGoal.goalStatusDurationWeekly(currentDate, managerActivity.getTotalActivityDay(currentDate)));
+        }
+        else {
+            weeklyGoalTv.setText("No goal set");
+            yAxisR.setAxisMaximum(10000f);
+        }
 
         List<BarEntry> entries = new ArrayList<>();
-        //readDB to find nb steps per hour
         Date dateImpl = currentDate;
         int nbsteps;
         for(int i=0;i<7;i++) {
             nbsteps = managerActivity.getTotalStepsDay(dateImpl);
             entries.add(new BarEntry((float) i, (float) nbsteps));
             dateImpl = DateUtil.addDays(dateImpl,1);
-        }
-
-        for(int i=0; i<24; i++){
-            /**dayMap.get(i);
-             hours.add(i,);**/
         }
 
         BarDataSet set = new BarDataSet(entries, "Activity");
