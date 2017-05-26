@@ -4,9 +4,11 @@ import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.traxivity.selfback.traxivity.admin.View.MessagesAdapter;
+import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -70,6 +73,11 @@ public class MessagesManager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_messages_manager);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         context = this;
 
         bctCategory_list = new ArrayList<>();
@@ -124,7 +132,9 @@ public class MessagesManager extends AppCompatActivity {
         pb_messagesLoading.setVisibility(View.GONE);
         final RadioGroup rg_achievementLevel = (RadioGroup)findViewById(R.id.ma_rg_achievementLevels);
         final TextView tv_none = (TextView) findViewById(R.id.tv_None);
-        tv_none.setText("None");
+        final TextView tv_listMessages = (TextView)findViewById(R.id.tv_listMessages);
+        tv_listMessages.setVisibility(View.GONE);
+        tv_none.setVisibility(View.GONE);
         spinner_category = (Spinner)findViewById(R.id.ma_spinner_category);
 
         final MessagesAdapter adapter = new MessagesAdapter(this, messagesList);
@@ -139,13 +149,13 @@ public class MessagesManager extends AppCompatActivity {
         MessageDAO.getInstance().getMessages(Achievement.High, "Action Planning", getMessagesTask);
 
         lv_messages.setOnItemClickListener(new AdapterView.OnItemClickListener(){
-           @Override
-           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-               Message messageClicked = adapter.getItem(position);
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Message messageClicked = adapter.getItem(position);
 
-               DialogFragment messageDetails = elementDetailsDialog.newInstance(messageClicked);
-               messageDetails.show(getFragmentManager(),TAG);
-           }
+                DialogFragment messageDetails = elementDetailsDialog.newInstance(messageClicked);
+                messageDetails.show(getFragmentManager(),TAG);
+            }
         });
 
         lv_messages.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -182,6 +192,7 @@ public class MessagesManager extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
+                            tv_listMessages.setVisibility(View.VISIBLE);
                             Log.d("task", "success");
                             messagesList.clear();
                             messagesList.addAll((ArrayList<Message>)task.getResult());
@@ -227,8 +238,10 @@ public class MessagesManager extends AppCompatActivity {
                 startActivity(newMessageIntent);
             }
         });
-
-
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 
 }

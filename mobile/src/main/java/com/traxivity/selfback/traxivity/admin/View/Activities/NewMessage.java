@@ -2,10 +2,12 @@ package com.traxivity.selfback.traxivity.admin.View.Activities;
 
 import android.app.DialogFragment;
 import android.graphics.Color;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import com.traxivity.selfback.traxivity.admin.Model.Message;
 import com.traxivity.selfback.traxivity.admin.Model.Quote;
 import com.traxivity.selfback.traxivity.admin.View.Dialogs.newCategoryDialog;
 import com.traxivity.selfback.traxivity.admin.View.Dialogs.newQuoteDialog;
+import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
 
 import java.util.ArrayList;
 import java.util.EnumMap;
@@ -44,6 +47,9 @@ public class NewMessage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_message);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         newMessage = getIntent().getParcelableExtra("messageToEdit");
         if(newMessage != null){
@@ -161,6 +167,9 @@ public class NewMessage extends AppCompatActivity {
 
             };
         });
-
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 }

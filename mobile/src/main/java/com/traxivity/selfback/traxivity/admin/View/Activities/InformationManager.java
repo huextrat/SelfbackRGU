@@ -3,9 +3,11 @@ package com.traxivity.selfback.traxivity.admin.View.Activities;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -19,11 +21,13 @@ import com.traxivity.selfback.traxivity.R;
 import com.traxivity.selfback.traxivity.admin.Controller.InformationDAO;
 import com.traxivity.selfback.traxivity.admin.Model.Information;
 import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDeleteDialog;
+import com.traxivity.selfback.traxivity.admin.View.Dialogs.elementDetailsDialog;
 import com.traxivity.selfback.traxivity.admin.View.Dialogs.newInformationDialog;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.traxivity.selfback.traxivity.admin.View.InformationAdapter;
+import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
 
 import java.util.ArrayList;
 
@@ -43,6 +47,11 @@ public class InformationManager extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_information);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         context = this;
 
         informationList = new ArrayList<>();
@@ -55,6 +64,10 @@ public class InformationManager extends AppCompatActivity {
         pb_info.setVisibility(View.GONE);
         final RadioGroup rg_infoType = (RadioGroup)findViewById(R.id.rg_infoType);
         final TextView tv_noneInfo = (TextView) findViewById(R.id.tv_noneInfo);
+        final TextView tv_listInfo = (TextView) findViewById(R.id.tv_listInfo);
+        tv_noneInfo.setVisibility(View.GONE);
+        tv_listInfo.setVisibility(View.GONE);
+
 
         final InformationAdapter adapter = new InformationAdapter(this, informationList);
         lv_info.setAdapter(adapter);
@@ -77,6 +90,7 @@ public class InformationManager extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
+                            tv_listInfo.setVisibility(View.VISIBLE);
                             Log.d("task", "success");
                             informationList.clear();
                             informationList.addAll((ArrayList<Information>)task.getResult());
@@ -116,6 +130,16 @@ public class InformationManager extends AppCompatActivity {
             }
         });
 
+        lv_info.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Information infoClicked = adapter.getItem(position);
+
+                DialogFragment infoDetails = elementDetailsDialog.newInstance(infoClicked);
+                infoDetails.show(getFragmentManager(),TAG);
+            }
+        });
+
         lv_info.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -127,5 +151,9 @@ public class InformationManager extends AppCompatActivity {
                 return true;
             }
         });
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 }

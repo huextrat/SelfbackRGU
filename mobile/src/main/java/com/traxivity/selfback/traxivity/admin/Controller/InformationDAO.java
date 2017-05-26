@@ -48,7 +48,7 @@ public class InformationDAO {
         }
     }
 
-    public void getInformation(final String informationType, final TaskCompletionSource<ArrayList<Information>> messagesGetter){
+    public void getInformation(final String informationType, final TaskCompletionSource<ArrayList<Information>> informationGetter){
         final ArrayList<Information> informationList = new ArrayList<>();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -58,7 +58,7 @@ public class InformationDAO {
                         informationList.add(D.getValue(Information.class));
                     }
                 }
-                messagesGetter.setResult(informationList);
+                informationGetter.setResult(informationList);
             }
 
             @Override

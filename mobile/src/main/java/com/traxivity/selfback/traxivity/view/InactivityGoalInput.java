@@ -67,7 +67,6 @@ public class InactivityGoalInput extends AppCompatActivity {
         managerActivity.removeLastActivity();
         finish();
         return true;
-
     }
 
     private void SetDividerColor(NumberPicker picker)

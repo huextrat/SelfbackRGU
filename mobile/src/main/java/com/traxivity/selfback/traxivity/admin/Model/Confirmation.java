@@ -4,38 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by Alexandre on 22/05/2017.
+ * Created by Alexandre on 25/05/2017.
  */
 
-public class Information implements Parcelable{
-    protected String type;
-    protected String content;
-
-    public Information(String type, String content) {
-        this.type = type;
-        this.content = content;
-    }
-
-    public Information(){
-        type = "";
-        content = "";
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+public class Confirmation extends Information implements Parcelable {
 
     // Creator
     public static final Parcelable.Creator CREATOR
@@ -49,10 +21,23 @@ public class Information implements Parcelable{
         }
     };
 
+    public Confirmation(String type, String content) {
+        super(type, content);
+    }
+
     // "De-parcel object
-    public Information(Parcel in) {
+    public Confirmation(Parcel in) {
         type = in.readString();
         content = in.readString();
+    }
+
+    public Confirmation() {
+        super();
+    }
+
+    public Confirmation(Information information){
+        this.type = information.getType();
+        this.content = information.getContent();
     }
 
     @Override

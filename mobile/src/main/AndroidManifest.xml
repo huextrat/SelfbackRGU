@@ -53,6 +53,8 @@
         <activity
             android:name=".admin.View.Activities.InformationManager"
             android:theme="@style/AppTheme" />
+        <activity android:name=".admin.View.Activities.ConfirmationManager"
+            android:theme="@style/AppTheme" />
 
         <service android:name=".model.ListenerService">
             <intent-filter>
@@ -77,6 +79,7 @@
             android:name=".model.ActivityRecogniserService"
             android:enabled="true"
             android:exported="true" />
+
     </application>
 
 </manifest>

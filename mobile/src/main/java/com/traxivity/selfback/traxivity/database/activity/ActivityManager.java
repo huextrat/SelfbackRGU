@@ -47,6 +47,20 @@ public class ActivityManager {
             DbActivity realmActivity = realm.copyToRealm(newActivity);
             realm.commitTransaction();
         }
+        else if(myActivity.getStartTime().getHours() == lastAddedActivity.getStartTime().getHours()
+                && myActivity.getEndTime().getHours() == lastAddedActivity.getEndTime().getHours()
+                && myActivity.getActivity().equals(lastAddedActivity.getActivity())) {
+
+            DbActivity updateActivity = new DbActivity(lastAddedActivity.getStartTime(), ActivityType.valueOf(myActivity.getActivity()),lastAddedActivity.getNbSteps()+myActivity.getNbSteps());
+
+            updateActivity.setEndTime(myActivity.getEndTime());
+            updateActivity.setDuration((myActivity.getEndTime().getTime()-lastAddedActivity.getStartTime().getTime())/1000);
+
+            realm.beginTransaction();
+            removeLastActivity();
+            DbActivity realmActivity = realm.copyToRealm(updateActivity);
+            realm.commitTransaction();
+        }
         else if(myActivity.getStartTime().getHours() != lastAddedActivity.getEndTime().getHours() || myActivity.getStartTime().getHours() != lastAddedActivity.getStartTime().getHours()){
             Calendar cal = Calendar.getInstance();
             cal.setTime(lastAddedActivity.getStartTime());
@@ -74,15 +88,7 @@ public class ActivityManager {
             realm.commitTransaction();
         }
         else {
-            DbActivity updateActivity = new DbActivity(lastAddedActivity.getStartTime(), ActivityType.valueOf(myActivity.getActivity()),lastAddedActivity.getNbSteps()+myActivity.getNbSteps());
-
-            updateActivity.setEndTime(myActivity.getEndTime());
-            updateActivity.setDuration((myActivity.getEndTime().getTime()-lastAddedActivity.getStartTime().getTime())/1000);
-
-            realm.beginTransaction();
-            removeLastActivity();
-            DbActivity realmActivity = realm.copyToRealm(updateActivity);
-            realm.commitTransaction();
+            return;
         }
     }
 
@@ -115,7 +121,7 @@ public class ActivityManager {
      */
     public List<DbActivity> getAllActivityRangeDay(Date beginningDate, Date endDate) {
         realm = Realm.getDefaultInstance();
-        RealmResults<DbActivity> results = realm.where(DbActivity.class).greaterThanOrEqualTo("id", beginningDate.getDate()).lessThanOrEqualTo("id",endDate.getDate()).findAllSorted("startTime", Sort.ASCENDING);
+        RealmResults<DbActivity> results = realm.where(DbActivity.class).greaterThanOrEqualTo("id", beginningDate.getDate()).lessThanOrEqualTo("id",endDate.getDate()).findAllSorted("startTime", Sort.DESCENDING);
         return realm.copyFromRealm(results);
     }
 
@@ -168,19 +174,21 @@ public class ActivityManager {
     public Map<Integer, Integer> getTotalStepsDayByHours(Date wantedDate) {
         Map<Integer, Integer> stepsDayByHours = new HashMap<>();
 
-        int lastHoursRange = 0;
-        int sumStepsByHours = 0;
-
         realm = Realm.getDefaultInstance();
         List<DbActivity> results = getAllActivityDay(wantedDate);
-        for(DbActivity activity : results){
-            if(activity.getHoursRange() == lastHoursRange){
-                sumStepsByHours = sumStepsByHours + activity.getNbSteps();
+
+        int lastActivityHoursRange = 999;
+        int totalNbSteps = 0;
+
+        for(DbActivity myActivity : results){
+            if(lastActivityHoursRange == myActivity.getHoursRange() || lastActivityHoursRange == 999){
+                totalNbSteps = totalNbSteps+myActivity.getNbSteps();
+                lastActivityHoursRange = myActivity.getHoursRange();
             }
             else {
-                stepsDayByHours.put(lastHoursRange, sumStepsByHours);
-                sumStepsByHours = 0;
-                lastHoursRange = activity.getHoursRange();
+                stepsDayByHours.put(lastActivityHoursRange,totalNbSteps);
+                lastActivityHoursRange = myActivity.getHoursRange();
+                totalNbSteps = myActivity.getNbSteps();
             }
         }
         return stepsDayByHours;
@@ -208,6 +216,6 @@ public class ActivityManager {
      * Remove the latest activity stored
      */
     public void removeLastActivity(){
-        realm.where(DbActivity.class).findAllSorted("startTime",Sort.ASCENDING).deleteFirstFromRealm();
+        realm.where(DbActivity.class).findAllSorted("startTime",Sort.DESCENDING).deleteFirstFromRealm();
     }
 }

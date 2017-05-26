@@ -1,7 +1,9 @@
 package com.traxivity.selfback.traxivity.admin.View.Activities;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -10,6 +12,7 @@ import android.widget.Toast;
 import com.traxivity.selfback.traxivity.R;
 import com.traxivity.selfback.traxivity.admin.Controller.ActivityConversionDAO;
 import com.traxivity.selfback.traxivity.admin.Model.ActivityToSteps;
+import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
 
 public class ActivityConversion extends AppCompatActivity {
 
@@ -17,6 +20,10 @@ public class ActivityConversion extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_conversion);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         final EditText et_activityName = (EditText)findViewById(R.id.et_activityName);
         final EditText et_stepsPerMinute = (EditText)findViewById(R.id.et_stepsPerMinute);
@@ -36,5 +43,9 @@ public class ActivityConversion extends AppCompatActivity {
 
             }
         });
+    }
+    public boolean onOptionsItemSelected(MenuItem item){
+        finish();
+        return true;
     }
 }

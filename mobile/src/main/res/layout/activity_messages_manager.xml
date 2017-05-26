@@ -46,11 +46,12 @@
         </LinearLayout>
 
         <TextView
-            android:text="Achievement level :"
+            android:id="@+id/ma_tv_achievement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/ma_tv_achievement"
-            android:textSize="16sp" />
+            android:text="Achievement level :"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -100,12 +101,21 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/ma_bt_newMessage"
                 android:layout_weight="1" />
+
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_listMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_None" />
+            android:text="List of messages :"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_None"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="None"/>
 
         <ProgressBar
             style="?android:attr/progressBarStyle"

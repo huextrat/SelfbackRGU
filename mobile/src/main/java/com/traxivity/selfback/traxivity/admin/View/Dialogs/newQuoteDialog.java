@@ -55,3 +55,4 @@ public class newQuoteDialog extends DialogFragment{
         return builder.create();
     }
 }
+

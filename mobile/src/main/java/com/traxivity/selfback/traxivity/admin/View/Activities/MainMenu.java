@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.traxivity.selfback.traxivity.R;
+import com.traxivity.selfback.traxivity.database.activity.ActivityManager;
 
 public class MainMenu extends AppCompatActivity {
     protected static Context context;
@@ -29,6 +30,8 @@ public class MainMenu extends AppCompatActivity {
         Button bt_activitiesManager = (Button)findViewById(R.id.bt_activities);
         Button bt_messagesManager = (Button)findViewById(R.id.bt_messages);
         Button bt_informationManager = (Button)findViewById(R.id.bt_information);
+        Button bt_confirmationManager = (Button)findViewById(R.id.bt_confirmation);
+
 
 
         bt_activitiesManager.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +57,18 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(informationManagerActivity);
             }
         });
+
+        bt_confirmationManager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent confirmationManagerActivity = new Intent(MainMenu.this, ConfirmationManager.class);
+                startActivity(confirmationManagerActivity);
+            }
+        });
     }
     public boolean onOptionsItemSelected(MenuItem item){
         finish();
         return true;
     }
 }
+

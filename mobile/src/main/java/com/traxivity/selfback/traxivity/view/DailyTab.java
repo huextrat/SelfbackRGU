@@ -30,6 +30,7 @@ import com.traxivity.selfback.traxivity.model.DateUtil;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import io.realm.Realm;
 
@@ -46,9 +47,14 @@ public class DailyTab extends Fragment {
         Button clearDb = (Button) v.findViewById(R.id.button_clear);
         TextView dailyGoalTv = (TextView) v.findViewById(R.id.goal_daily);
 
+        Date testDate = new Date(2017,05,24);
         Date currentDate = new Date();
 
         ActivityManager managerActivity = new ActivityManager();
+        List<DbActivity> a = managerActivity.getAllActivityRangeDay(testDate,currentDate);
+        for(DbActivity activity : a){
+            Log.d("test",activity.getActivity()+" - "+activity.getStartTime() + " - "+ activity.getEndTime() + " - "+activity.getDuration());
+        }
         GoalManager managerGoal = new GoalManager();
 
         final DbGoal dailyGoalSteps = managerGoal.goalStepsDaily(currentDate);
@@ -80,7 +86,7 @@ public class DailyTab extends Fragment {
          graphChart.getDescription().setEnabled(false);
 
          XAxis xAxis = graphChart.getXAxis();
-         xAxis.setAxisMaximum(7f);
+         xAxis.setAxisMaximum(24f);
          xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
          YAxis yAxisR = graphChart.getAxisRight();
          yAxisR.setDrawLabels(false); // no axis labels
