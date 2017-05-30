@@ -5,12 +5,10 @@
 
 
     <TextView
-        android:text="Content :"
+        android:id="@+id/tv_content_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_content_title"
-        android:textStyle="normal|bold"
-        />
+        android:text="Content :" />
 
     <TextView
         android:text="content"

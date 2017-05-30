@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:id="@+id/container"
     android:background="#0092A6"
-    tools:context="com.traxivity.selfback.traxivity.MainActivity"
+    tools:context="com.fanny.traxivity.MainActivity"
     tools:deviceIds="wear_square">
 
     <TextView

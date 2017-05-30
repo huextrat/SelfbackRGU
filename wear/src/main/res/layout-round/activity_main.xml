@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.traxivity.selfback.traxivity.MainActivity"
+    tools:context="com.fanny.traxivity.MainActivity"
     tools:deviceIds="wear_round">
 
 

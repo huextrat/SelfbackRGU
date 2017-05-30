@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.traxivity.selfback.traxivity.MainActivity"
+    tools:context="com.fanny.traxivity.MainActivity"
     tools:showIn="@layout/app_bar_main"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
             android:layout_height="5dp"
             android:layout_width="match_parent"/>
 
-        <com.traxivity.selfback.traxivity.model.SlidingTabLayout
+        <com.fanny.traxivity.model.SlidingTabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="50dp"

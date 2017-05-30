@@ -8,22 +8,22 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.alexandre.motivational_messages_admin.View.Activities.MessagesManager">
+    tools:context=".admin.view.activities.MessagesManager">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentLeft="true">
 
 
         <TextView
-            android:text="Settings :"
+            android:id="@+id/tv_fetchMessages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_fetchMessages"
             android:fontFamily="sans-serif"
+            android:text="Settings :"
             android:textSize="18sp" />
 
         <LinearLayout
@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Achievement level :"
-            android:textSize="16sp"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <RadioGroup
@@ -65,21 +65,32 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Low" />
+                android:text="Low"
+                android:textSize="12dp"/>
 
             <RadioButton
                 android:id="@+id/ma_r_moderate"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="Moderate" />
+                android:text="Moderate"
+                android:textSize="12dp"/>
 
             <RadioButton
                 android:id="@+id/ma_r_high"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:text="High" />
+                android:text="High"
+                android:textSize="12dp"/>
+
+            <RadioButton
+                android:id="@+id/ma_r_full"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Full"
+                android:textSize="12dp"/>
 
         </RadioGroup>
 
@@ -109,6 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="List of messages :"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView

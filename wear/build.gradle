@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 23
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
-        applicationId "com.traxivity.selfback.traxivity"
+        applicationId "com.fanny.traxivity"
         minSdkVersion 20
-        targetSdkVersion 25
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -19,6 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     dexOptions {
         javaMaxHeapSize "4g"
     }
@@ -26,11 +27,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.google.android.support:wearable:2.0.2'
-    compile 'com.google.android.gms:play-services-wearable:10.2.6'
-    provided 'com.google.android.wearable:wearable:2.0.2'
-    compile 'com.google.android.gms:play-services-location:10.2.6'
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.google.android.support:wearable:2.0.0-beta2'
+    provided 'com.google.android.wearable:wearable:2.0.0-beta2'
+    compile 'com.google.android.gms:play-services:8.1.0'
     compile project(':opencv')
     compile project(':dsp-collection')
 }

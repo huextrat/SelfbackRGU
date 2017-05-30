@@ -8,26 +8,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:958555222488:android:cfc79e87bff34f68",
+        "mobilesdk_app_id": "1:958555222488:android:73de1b33f096fde9",
         "android_client_info": {
-          "package_name": "com.fanny.traxivity"
+          "package_name": "com.traxivity.selfback.traxivity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "958555222488-fl2tg4vfg0pu51dt9ame2qr5kuprrf4q.apps.googleusercontent.com",
+          "client_id": "958555222488-vaivjo8u66otks09a883qi5cekdjki7k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fanny.traxivity",
-            "certificate_hash": "a254d344596e0af75cbb193c5cac0f7a2d146600"
+            "package_name": "com.traxivity.selfback.traxivity",
+            "certificate_hash": "3ee5adf4bb7ff90be5b3ac93a057f73deda99e3b"
           }
         },
         {
-          "client_id": "958555222488-dqu5m6q1i79d8td9b4h3fpdeomoia4dp.apps.googleusercontent.com",
+          "client_id": "958555222488-rro94k5o2s3t2u03gporpg73betdop7l.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.fanny.traxivity",
-            "certificate_hash": "0c049a202b81610a621bd27228f9b53fef59ad3c"
+            "package_name": "com.traxivity.selfback.traxivity",
+            "certificate_hash": "a254d344596e0af75cbb193c5cac0f7a2d146600"
           }
         },
         {
@@ -63,17 +63,17 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:958555222488:android:73de1b33f096fde9",
+        "mobilesdk_app_id": "1:958555222488:android:cfc79e87bff34f68",
         "android_client_info": {
-          "package_name": "com.traxivity.selfback.traxivity"
+          "package_name": "com.fanny.traxivity"
         }
       },
       "oauth_client": [
         {
-          "client_id": "958555222488-vaivjo8u66otks09a883qi5cekdjki7k.apps.googleusercontent.com",
+          "client_id": "958555222488-onou97mdg784qq0kabmparcfcf18akvf.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.traxivity.selfback.traxivity",
+            "package_name": "com.fanny.traxivity",
             "certificate_hash": "3ee5adf4bb7ff90be5b3ac93a057f73deda99e3b"
           }
         },

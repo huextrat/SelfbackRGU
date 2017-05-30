@@ -163,7 +163,7 @@ public class NativeCameraView extends CameraBridgeViewBase {
         private VideoCapture mCapture;
         private Mat mRgba;
         private Mat mGray;
-    };
+    }
 
     private class CameraWorker implements Runnable {
 
