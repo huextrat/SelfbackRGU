@@ -125,7 +125,7 @@ public class ConversionManager extends AppCompatActivity {
         bt_conversionEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityConversionDAO.getInstance().updateConversion(selectedActivity,Float.parseFloat(et_conversion.getText().toString()));
+                ActivityConversionDAO.getInstance().updateConversion(sp_activityList.getSelectedItem().toString(),Float.parseFloat(et_conversion.getText().toString()));
                 activityConversionList.get(sp_activityList.getSelectedItemPosition()).setNumberStepsPerMinute(Float.parseFloat(et_conversion.getText().toString()));
                 Toast.makeText(context, "Conversion edited", Toast.LENGTH_SHORT).show();
             }

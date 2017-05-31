@@ -45,7 +45,7 @@ public class StepsManager {
         else if(mySteps.getHoursRange() != lastAddedActivity.getHoursRange()){
             Calendar cal = Calendar.getInstance();
             cal.setTime(lastAddedActivity.getStartTime());
-            cal.add(Calendar.HOUR, 1);
+            cal.add(Calendar.HOUR, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             Date endTime = cal.getTime();
@@ -85,10 +85,26 @@ public class StepsManager {
         return result;
     }
 
+    public List<DbSteps> getAllActivityDay(Date wantedDate) {
+        realm = Realm.getDefaultInstance();
+        RealmResults<DbSteps> results = realm.where(DbSteps.class).equalTo("id",wantedDate.getDate()).findAllSorted("startTime", Sort.DESCENDING);
+        return realm.copyFromRealm(results);
+    }
+
+    public Map<Integer, DbSteps> getAllActivityDayByHours(Date wantedDate) {
+        Map<Integer, DbSteps> activityByHours = new HashMap<>();
+        realm = Realm.getDefaultInstance();
+        List<DbSteps> results = getAllActivityDay(wantedDate);
+        for(DbSteps activity : results){
+            activityByHours.put(activity.getHoursRange(),activity);
+        }
+        return activityByHours;
+    }
+
     public Map<Integer, Integer> getTotalStepsDayByHours(Date wantedDate) {
         Map<Integer, Integer> stepsDayByHours = new HashMap<>();
 
-        List<DbSteps> results = getAllStepsDay(wantedDate);
+        List<DbSteps> results = getAllActivityDay(wantedDate);
 
         int lastActivityHoursRange = 999;
         int totalNbSteps = 0;

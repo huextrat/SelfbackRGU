@@ -34,6 +34,16 @@ public class InactivityManager {
         realm.commitTransaction();
     }
 
+    public double getTotalInactivityDay(Date wantedDate) {
+        double result = 0;
+        realm = Realm.getDefaultInstance();
+        RealmResults<DbInactivity> results = realm.where(DbInactivity.class).equalTo("id",wantedDate.getDate()).findAll();
+        for(DbInactivity inactivity : results){
+            result = result+(inactivity.getNbHours()*3600)+(inactivity.getNbMinutes()*60);
+        }
+        return result;
+    }
+
     public DbInactivity getInactivityDay(Date wantedDate) {
         realm = Realm.getDefaultInstance();
         DbInactivity results = realm.where(DbInactivity.class).equalTo("id",wantedDate.getDate()).findFirst();

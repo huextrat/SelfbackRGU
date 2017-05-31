@@ -72,7 +72,9 @@ public class ActivityConversionDAO {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ActivityToSteps updatedOne = new ActivityToSteps(activityName, newStepsConversion);
-                mDatabase.child(activityName).setValue(updatedOne);
+                if(activityName != null) {
+                    mDatabase.child(activityName).setValue(updatedOne);
+                }
             }
 
             @Override

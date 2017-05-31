@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.fanny.traxivity.database.activity.ActivityManager;
 import com.fanny.traxivity.database.goal.DbGoal;
 import com.fanny.traxivity.database.goal.GoalManager;
+import com.fanny.traxivity.database.inactivity.InactivityManager;
 import com.fanny.traxivity.model.DateUtil;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -45,6 +46,7 @@ public class WeeklyTab extends Fragment {
         Date currentDate = new Date();
 
         HorizontalBarChart graphChart = (HorizontalBarChart) v.findViewById(R.id.barChart);
+
         graphChart.setScaleEnabled(false);
         graphChart.setDragEnabled(false);
         graphChart.setPinchZoom(false);
@@ -61,17 +63,40 @@ public class WeeklyTab extends Fragment {
         yAxisR.setDrawGridLines(false); // no grid lines
         yAxisR.setDrawZeroLine(true); // draw a zero line
 
+        HorizontalBarChart graphChart2 = (HorizontalBarChart) v.findViewById(R.id.barChart2);
+        graphChart2.setScaleEnabled(false);
+        graphChart2.setDragEnabled(false);
+        graphChart2.setPinchZoom(false);
+        graphChart2.getDescription().setEnabled(false);
+
+        XAxis xAxis2 = graphChart2.getXAxis();
+        xAxis2.setAxisMaximum(6f);
+        xAxis2.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis2.setDrawGridLines(false);
+        graphChart2.getAxisLeft().setDrawGridLines(false);
+        YAxis yAxisR2 = graphChart2.getAxisRight();
+        yAxisR2.setDrawLabels(false); // no axis labels
+        yAxisR2.setDrawAxisLine(false); // no axis line
+        yAxisR2.setDrawGridLines(false); // no grid lines
+        yAxisR2.setDrawZeroLine(true); // draw a zero line
+
         ActivityManager managerActivity = new ActivityManager();
         GoalManager managerGoal = new GoalManager();
+        InactivityManager managerInactivity = new InactivityManager();
 
         final DbGoal dailyGoalSteps = managerGoal.goalStepsDaily(currentDate);
         final DbGoal dailyGoalDuration = managerGoal.goalDurationDaily(currentDate);
+
 
         List<BarEntry> entries = new ArrayList<>();
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         Date dateImpl = c.getTime();
         BarDataSet set;
+        BarDataSet set2;
+        float inactivityDuration;
+        List<BarEntry> entries2 = new ArrayList<>();
+
 
         if (dailyGoalSteps != null) {
             float stepsNumber = (float) dailyGoalSteps.getStepsNumber();
@@ -85,9 +110,15 @@ public class WeeklyTab extends Fragment {
             for(int i=0;i<7;i++) {
                 nbsteps = managerActivity.getTotalStepsDay(dateImpl);
                 entries.add(new BarEntry((float) i, (float) nbsteps));
+
+                inactivityDuration = (float) managerInactivity.getTotalInactivityDay(dateImpl);
+                inactivityDuration = inactivityDuration/3600f;
+                entries2.add(new BarEntry((float) i, inactivityDuration));
+
                 dateImpl = DateUtil.addDays(dateImpl,1);
             }
             set = new BarDataSet(entries, "Steps");
+            set2 = new BarDataSet(entries2, "Inactivity");
         }
         else if(dailyGoalDuration != null){
             float timeDuration = (float) dailyGoalDuration.getDuration();
@@ -103,18 +134,33 @@ public class WeeklyTab extends Fragment {
                 duration = (float) managerActivity.getTotalActivityDay(dateImpl);
                 duration = duration/3600f; //TO get Hours of activity
                 entries.add(new BarEntry((float) i, duration));
+
+                inactivityDuration = (float) managerInactivity.getTotalInactivityDay(dateImpl);
+                inactivityDuration = inactivityDuration/3600f;
+                entries2.add(new BarEntry((float) i, inactivityDuration));
+
                 dateImpl = DateUtil.addDays(dateImpl,1);
             }
             set = new BarDataSet(entries, "Time");
+            set2 = new BarDataSet(entries2, "Inactivity");
         }
         else {
             // weeklyGoalTv.setText("No goal set");
             set = new BarDataSet(entries, "Activity");
+            set2 = new BarDataSet(entries2, "Inactivity");
             yAxisR.setAxisMaximum(50000f);
         }
 
+        set2.setColor(getResources().getColor(R.color.red));
+        BarData data2 = new BarData(set2);
+
+        data2.setBarWidth(0.6f); // set custom bar width
+        graphChart2.setData(data2);
+        graphChart2.invalidate();
+
+
         BarData data = new BarData(set);
-        data.setBarWidth(0.9f); // set custom bar width
+        data.setBarWidth(0.6f); // set custom bar width
         graphChart.setData(data);
         graphChart.invalidate();
 
