@@ -5,14 +5,17 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
 import com.fanny.traxivity.R;
+import com.fanny.traxivity.view.AddNewActivity;
 
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by extra on 30/05/2017.
@@ -33,6 +36,8 @@ public class datePickerDialog extends DialogFragment implements DatePickerDialog
     @Override
     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
         TextView tv_date = (TextView)getActivity().findViewById(R.id.tv_date);
+
+        AddNewActivity.date = new Date(year-1900,month,dayOfMonth);
 
         tv_date.setText(Html.fromHtml("Date : <font color='#000000'>" + Integer.toString(dayOfMonth) + "/" + Integer.toString(month) + "/" + Integer.toString(year) + "</font>"));
     }

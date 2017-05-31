@@ -42,7 +42,14 @@ public class ActivityManager {
         }
         lastAddedActivity = lastAddedActivityList.get(0);
 
-        if(!myActivity.getActivity().equals(lastAddedActivity.getActivity())) {
+        if(myActivity.isSpecialActivity()){
+            DbActivity newActivity = new DbActivity(myActivity.getStartTime(), myActivity.getEndTime(), myActivity.getActivity(),myActivity.getNbSteps());
+
+            realm.beginTransaction();
+            DbActivity realmActivity = realm.copyToRealm(newActivity);
+            realm.commitTransaction();
+        }
+        else if(!myActivity.getActivity().equals(lastAddedActivity.getActivity())) {
             Calendar cal = Calendar.getInstance();
             long sous = myActivity.getStartTime().getTime() - 5000;
             cal.setTimeInMillis(sous);

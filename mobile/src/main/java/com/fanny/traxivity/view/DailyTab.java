@@ -15,6 +15,7 @@ import com.fanny.traxivity.database.activity.DbActivity;
 import com.fanny.traxivity.database.goal.DbGoal;
 import com.fanny.traxivity.database.goal.GoalManager;
 import com.fanny.traxivity.database.inactivity.DbInactivity;
+import com.fanny.traxivity.model.DateUtil;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -186,12 +187,8 @@ public class DailyTab extends Fragment {
              yAxisR.setAxisMaximum(10000f);
          }
 
-         List<DbActivity> list = managerActivity.getAllActivityDay(currentDate);
-        for(DbActivity activity : list){
-            Log.d("test", activity.getActivity()+" - "+activity.getStartTime()+ " - "+ activity.getEndTime());
-        }
 
-         clearDb.setOnClickListener(new View.OnClickListener() {
+        clearDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clearDb();
@@ -203,6 +200,16 @@ public class DailyTab extends Fragment {
         graphChart.setData(data);
         graphChart.setDrawGridBackground(false);
         graphChart.invalidate();
+
+        List<DbActivity> list = managerActivity.getAllActivityDay(currentDate);
+        for(DbActivity activity : list){
+            Log.d("testActivity", activity.getActivity()+" - "+activity.getStartTime()+ " - "+ activity.getEndTime());
+        }
+
+        List<DbGoal> listGoal = managerGoal.getAllGoal();
+        for(DbGoal goal : listGoal){
+            Log.d("testGoal", goal.getBeginningDate()+" - "+goal.getStepsNumber());
+        }
 
         return v;
     }

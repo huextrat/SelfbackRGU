@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.admin.controller.ActivityConversionDAO;
-import com.fanny.traxivity.admin.model.ActivityToSteps;
+import com.fanny.traxivity.model.ActivityToSteps;
 
 public class ActivityConversion extends AppCompatActivity {
 

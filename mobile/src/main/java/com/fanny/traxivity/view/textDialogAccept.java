@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
+import io.realm.Realm;
+
 /**
  * Created by jbjourget on 02/05/2017.
  */
@@ -54,44 +56,24 @@ public class textDialogAccept extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
 
                         GoalManager manager = new GoalManager();
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.beginTransaction();
+                        realm.delete(DbGoal.class);
+                        realm.commitTransaction();
                         DbGoal newGoal = new DbGoal();
                         Date today = new Date();
 
                         if(GoalInputActivity.nbSteps == null){
-                            /*if(GoalInputActivity.isWeek){
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(GoalInputActivity.dateD);
-                                cal.add(Calendar.DAY_OF_WEEK, 7);
-                                Date endTime = cal.getTime();
-
-                                manager.insertGoal(newGoal.withDuration(GoalInputActivity.dateD,endTime,GoalInputActivity.nbHours*3600+GoalInputActivity.nbMin*60));
-                            }
-                            else {*/
-                            /*Calendar cal = Calendar.getInstance();
-                            cal.setTime(GoalInputActivity.dateD);
-                            cal.add(Calendar.DAY_OF_WEEK, 1);
-                            Date endTime = cal.getTime();*/
-
                             manager.insertGoal(newGoal.withDuration(today, DateUtil.addDays(today,1),GoalInputActivity.nbHours*3600+GoalInputActivity.nbMin*60));
-                            //}
+                            for(int i=1; i<7; i++){
+                                manager.insertGoal(newGoal.withDuration(DateUtil.addDays(today,i), DateUtil.addDays(today,i+1),GoalInputActivity.nbHours*3600+GoalInputActivity.nbMin*60));
+                            }
                         }
                         else {
-                           /* if(GoalInputActivity.isWeek){
-                                Calendar cal = Calendar.getInstance();
-                                cal.setTime(GoalInputActivity.dateD);
-                                cal.add(Calendar.DAY_OF_WEEK, 7);
-                                Date endTime = cal.getTime();
-
-                                manager.insertGoal(newGoal.withSteps(GoalInputActivity.dateD,endTime,GoalInputActivity.nbSteps));
+                            manager.insertGoal(newGoal.withSteps(today, DateUtil.addDays(today,1),GoalInputActivity.nbSteps));
+                            for(int i=1; i<7; i++){
+                                manager.insertGoal(newGoal.withSteps(DateUtil.addDays(today,i), DateUtil.addDays(today,i+1),GoalInputActivity.nbSteps));
                             }
-                            else {*/
-                           /* Calendar cal = Calendar.getInstance();
-                            cal.setTime(GoalInputActivity.dateD);
-                            cal.add(Calendar.DAY_OF_WEEK, 1);
-                            Date endTime = cal.getTime();*/
-
-                            manager.insertGoal(newGoal.withSteps(new Date(), DateUtil.addDays(today,1),GoalInputActivity.nbSteps));
-                            //}
                         }
 
                         //  InactivityGoalInput.dateDeb = GoalInputActivity.dateD;

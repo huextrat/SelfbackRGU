@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.admin.controller.ActivityConversionDAO;
-import com.fanny.traxivity.admin.model.ActivityToSteps;
+import com.fanny.traxivity.model.ActivityToSteps;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
@@ -96,7 +96,7 @@ public class ConversionManager extends AppCompatActivity {
             }
         });
 
-        ActivityConversionDAO.getInstance().getConversion(getConversionTask);
+        ActivityConversionDAO.getInstance().getConversionList(getConversionTask);
 
 
         sp_activityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -161,7 +161,7 @@ public class ConversionManager extends AppCompatActivity {
                 }
             });
 
-            ActivityConversionDAO.getInstance().getConversion(getConversionTask);
+            ActivityConversionDAO.getInstance().getConversionList(getConversionTask);
         }
     }
 

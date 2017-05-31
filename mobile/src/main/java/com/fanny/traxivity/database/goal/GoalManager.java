@@ -29,31 +29,28 @@ public class GoalManager {
         return realm.copyFromRealm(results);
     }
 
+    public List<DbGoal> getAllGoal() {
+        realm = Realm.getDefaultInstance();
+        RealmResults<DbGoal> results = realm.where(DbGoal.class).findAllSorted("beginningDate", Sort.ASCENDING);
+        return realm.copyFromRealm(results);
+    }
+
 
     public DbGoal goalStepsDaily(Date beginningDate){
         List<DbGoal> listGoal = getGoal(beginningDate);
         for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Steps") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 1){
+            if(myGoal.getType().equals("Steps")){
                 return myGoal;
             }
         }
         return null;
     }
 
-    public DbGoal goalStepsWeekly(Date beginningDate){
-        List<DbGoal> listGoal = getGoal(beginningDate);
-        for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Steps") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 7){
-                return myGoal;
-            }
-        }
-        return null;
-    }
 
     public float goalStatusStepsDaily(Date beginningDate, int steps){
         List<DbGoal> listGoal = getGoal(beginningDate);
         for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Steps") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 1){
+            if(myGoal.getType().equals("Steps")){
                 if((((double)steps/myGoal.getStepsNumber())*100) < 100){
                     return (float) (((double)steps/myGoal.getStepsNumber())*100);
                 }
@@ -63,20 +60,10 @@ public class GoalManager {
         return 0;
     }
 
-    public int goalStatusStepsWeekly(Date beginningDate, int steps){
-        List<DbGoal> listGoal = getGoal(beginningDate);
-        for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Steps") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 7){
-                return (int) (((double)steps/myGoal.getStepsNumber())*100);
-            }
-        }
-        return 0;
-    }
-
     public int goalStatusDurationDaily(Date beginningDate, double duration){
         List<DbGoal> listGoal = getGoal(beginningDate);
         for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Duration") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 1){
+            if(myGoal.getType().equals("Duration")){
                 if(((duration/myGoal.getStepsNumber())*100) < 100){
                     return (int)(duration/myGoal.getStepsNumber())*100;
                 }
@@ -86,33 +73,19 @@ public class GoalManager {
         return 0;
     }
 
-    public int goalStatusDurationWeekly(Date beginningDate, double duration){
-        List<DbGoal> listGoal = getGoal(beginningDate);
-        for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Duration") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 7){
-                return (int) ((duration/myGoal.getStepsNumber())*100);
-            }
-        }
-        return 0;
-    }
-
     public DbGoal goalDurationDaily(Date beginningDate){
         List<DbGoal> listGoal = getGoal(beginningDate);
         for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Duration") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 1){
+            if(myGoal.getType().equals("Duration")){
                 return myGoal;
             }
         }
         return null;
     }
 
-    public DbGoal goalDurationWeekly(Date beginningDate){
-        List<DbGoal> listGoal = getGoal(beginningDate);
-        for(DbGoal myGoal : listGoal){
-            if(myGoal.getType().equals("Duration") && (myGoal.getEndingDate().getDate()-myGoal.getBeginningDate().getDate()) == 7){
-                return myGoal;
-            }
+    public void removeAllGoal(){
+        if(getAllGoal() != null) {
+            realm.where(DbGoal.class).findAll().deleteAllFromRealm();
         }
-        return null;
     }
 }

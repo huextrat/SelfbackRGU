@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.fanny.traxivity.MainActivity;
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.admin.controller.ActivityConversionDAO;
-import com.fanny.traxivity.admin.model.ActivityToSteps;
+import com.fanny.traxivity.model.ActivityToSteps;
 import com.fanny.traxivity.dialogs.datePickerDialog;
 import com.fanny.traxivity.dialogs.timePickerDialog;
 import com.fanny.traxivity.database.activity.ActivityManager;
@@ -30,8 +30,8 @@ import com.google.android.gms.tasks.TaskCompletionSource;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by extra on 30/05/2017.
@@ -40,7 +40,16 @@ import java.util.Date;
 public class AddNewActivity extends AppCompatActivity {
 
     private TaskCompletionSource<ArrayList<ActivityToSteps>> getConversionTask;
+    private TaskCompletionSource<Float> getConversionActivityToSteps;
+    private Task getConversionActivityToStepsWaiter;
     private Task getConversionTaskWaiter;
+
+    public static Date date;
+    public static int hourStartTime;
+    public static int minutesStartTime;
+
+    private int nbHours;
+    private int nbMinutes;
 
     private ArrayList<ActivityToSteps> activityConversionList;
     private ArrayList<String> activityList;
@@ -48,6 +57,8 @@ public class AddNewActivity extends AppCompatActivity {
     private Date activityDate;
     private int activityHour = 0;
     private int activityMinute = 0;
+
+    private float activityToNbSteps = 0;
 
     //public TextView tv
 
@@ -79,6 +90,9 @@ public class AddNewActivity extends AppCompatActivity {
         Button bt_add = (Button)findViewById(R.id.bt_adNewActivity);
 
 
+        getConversionActivityToSteps = new TaskCompletionSource<>();
+        getConversionActivityToStepsWaiter = getConversionActivityToSteps.getTask();
+
         getConversionTask = new TaskCompletionSource<>();
         getConversionTaskWaiter = getConversionTask.getTask();
 
@@ -108,13 +122,60 @@ public class AddNewActivity extends AppCompatActivity {
             }
         });
 
-        ActivityConversionDAO.getInstance().getConversion(getConversionTask);
+        getConversionActivityToStepsWaiter.addOnCompleteListener(new OnCompleteListener() {
+            @Override
+            public void onComplete(@NonNull Task task) {
+                if(task.isSuccessful()){
+                    activityToNbSteps = (float)task.getResult();
+
+
+                    ActivityManager managerActivity = new ActivityManager();
+                    //------------------------------------------------
+                    Calendar start = Calendar.getInstance(Locale.getDefault());
+                    start.setTime(date);
+                    start.set(Calendar.HOUR_OF_DAY, hourStartTime);
+                    start.set(Calendar.MINUTE, minutesStartTime);
+                    start.set(Calendar.SECOND, 0);
+                    //------------------------------------------------
+                    Calendar end = Calendar.getInstance(Locale.getDefault());
+                    end.setTime(date);
+                    end.set(Calendar.HOUR_OF_DAY, hourStartTime+nbHours);
+                    end.set(Calendar.MINUTE, minutesStartTime+nbMinutes);
+                    end.set(Calendar.SECOND, 0);
+
+                    Log.d("test",activityToNbSteps+"");
+
+                    DbActivity newActivity = new DbActivity(start.getTime(),end.getTime(),sp_activityList.getSelectedItem().toString(),activityToNbSteps*((nbHours*60)+(nbMinutes)));
+                    managerActivity.insertActivity(newActivity);
+                }
+                else{
+                    Exception e = task.getException();
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+        ActivityConversionDAO.getInstance().getConversionList(getConversionTask);
 
         np_hours.setMinValue(0);
         np_hours.setMaxValue(24);
 
         np_minutes.setMinValue(0);
         np_minutes.setMaxValue(60);
+
+        np_hours.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                nbHours = newVal;
+            }
+        });
+
+        np_minutes.setOnValueChangedListener(new NumberPicker.OnValueChangeListener(){
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                nbMinutes = newVal;
+            }
+        });
 
         bt_pickDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,15 +196,8 @@ public class AddNewActivity extends AppCompatActivity {
         bt_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityManager managerActivity = new ActivityManager();
+                ActivityConversionDAO.getInstance().getConversion(getConversionActivityToSteps, sp_activityList.getSelectedItem().toString());
 
-                //------------------------------------------------
-
-                //------------------------------------------------
-                Calendar start = Calendar.getInstance();
-                Calendar end = Calendar.getInstance();
-                DbActivity newActivity = new DbActivity(start.getTime(),end.getTime(),sp_activityList.getSelectedItem().toString(),10);
-                managerActivity.insertActivity(newActivity);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
             }
         });

@@ -16,7 +16,16 @@ public class DbActivity extends RealmObject {
     private Date endTime;
     private double duration;
     private String activity;
+    private boolean specialActivity = false;
     private int nbSteps;
+
+    public boolean isSpecialActivity() {
+        return specialActivity;
+    }
+
+    public void setSpecialActivity(boolean specialActivity) {
+        this.specialActivity = specialActivity;
+    }
 
     public int getId() {
         return id;
@@ -75,14 +84,14 @@ public class DbActivity extends RealmObject {
         this.nbSteps = nbSteps;
     }
 
-    public DbActivity(Date startTime, Date endTime, String activity, int nbSteps) {
+    public DbActivity(Date startTime, Date endTime, String activity, float nbSteps) {
         this.id = startTime.getDate();
         this.hoursRange = startTime.getHours();
         this.startTime = startTime;
         this.endTime = endTime;
-        this.duration = (endTime.getTime() - startTime.getTime())/1000;
         this.activity = activity;
-        this.nbSteps = nbSteps;
+        this.nbSteps = (int)nbSteps;
+        this.specialActivity = true;
     }
 
     public DbActivity(){

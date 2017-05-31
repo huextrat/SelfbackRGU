@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.admin.controller.ActivityConversionDAO;
-import com.fanny.traxivity.admin.model.ActivityToSteps;
+import com.fanny.traxivity.model.ActivityToSteps;
 
 /**
  * Created by extra on 30/05/2017.

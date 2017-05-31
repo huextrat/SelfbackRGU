@@ -1,7 +1,7 @@
 package com.fanny.traxivity.admin.controller;
 
 
-import com.fanny.traxivity.admin.model.ActivityToSteps;
+import com.fanny.traxivity.model.ActivityToSteps;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -48,7 +48,7 @@ public class ActivityConversionDAO {
         }
     }
 
-    public void getConversion(final TaskCompletionSource<ArrayList<ActivityToSteps>> conversionsGetter){
+    public void getConversionList(final TaskCompletionSource<ArrayList<ActivityToSteps>> conversionsGetter){
         final ArrayList<ActivityToSteps> conversionList = new ArrayList<>();
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -80,6 +80,23 @@ public class ActivityConversionDAO {
 
             }
         });
+    }
+
+    public void getConversion(final TaskCompletionSource<Float> conversionGetter, final String activityName){
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(activityName)){
+                    conversionGetter.setResult((dataSnapshot.child(activityName).getValue(ActivityToSteps.class)).getNumberStepsPerMinute());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 }

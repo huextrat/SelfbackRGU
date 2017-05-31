@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import com.fanny.traxivity.R;
+import com.fanny.traxivity.view.AddNewActivity;
 
 import java.util.Calendar;
 
@@ -29,11 +30,14 @@ public class timePickerDialog extends DialogFragment
 
         // Create a new instance of TimePickerDialog and return it
         return new TimePickerDialog(getActivity(), this, hour, minute,
-                DateFormat.is24HourFormat(getActivity()));
+                false);
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         TextView tv_date = (TextView)getActivity().findViewById(R.id.tv_time);
+
+        AddNewActivity.hourStartTime = hourOfDay;
+        AddNewActivity.minutesStartTime = minute;
 
         tv_date.setText(Html.fromHtml("Start time : <font color='#000000'>" + Integer.toString(hourOfDay) + ":" + Integer.toString(minute)+ "</font>"));
     }
