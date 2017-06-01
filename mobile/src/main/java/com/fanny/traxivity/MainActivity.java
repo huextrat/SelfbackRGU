@@ -1,9 +1,11 @@
 package com.fanny.traxivity;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,8 +49,18 @@ public class MainActivity extends AppCompatActivity
 
         Realm.init(this);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        Menu menuNav = navigationView.getMenu();
+
+        final MenuItem addNewActivity = menuNav.findItem(R.id.new_activity);
+        addNewActivity.setEnabled(false);
+        final MenuItem adminItem = menuNav.findItem(R.id.nav_admin);
+        adminItem.setEnabled(false);
 
         int numboftabs = 3;
         ViewPagerAdapter adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles, numboftabs);
@@ -86,7 +98,6 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
 
@@ -104,6 +115,8 @@ public class MainActivity extends AppCompatActivity
                         email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
                         usernameString = String.valueOf(username.getText());
                         emailString = String.valueOf(email.getText());
+                        adminItem.setEnabled(true);
+                        addNewActivity.setEnabled(true);
                     }
                 }
             }
