@@ -104,7 +104,7 @@ public class WeeklyTab extends Fragment {
             weeklyCircle.setProgress(managerGoal.goalStatusStepsWeekly(currentDate, managerActivity.getTotalStepsDay(currentDate)));*/
             LimitLine limitLine = new LimitLine(stepsNumber, "Steps Objective");
             limitLine.setLineColor(Color.CYAN);
-            yAxisR.addLimitLine(limitLine);
+            //yAxisR.addLimitLine(limitLine);
             yAxisR.setAxisMaximum(stepsNumber*1.5f);
             int nbsteps;
             for(int i=0;i<7;i++) {
@@ -127,7 +127,7 @@ public class WeeklyTab extends Fragment {
             weeklyCircle.setProgress(managerGoal.goalStatusDurationWeekly(currentDate, managerActivity.getTotalActivityDay(currentDate)));*/
             LimitLine limitLine = new LimitLine(timeDuration, "Time Objective");
             limitLine.setLineColor(Color.CYAN);
-            yAxisR.addLimitLine(limitLine);
+            //yAxisR.addLimitLine(limitLine);
             yAxisR.setAxisMaximum(timeDuration*1.5f);
             float duration;
             for(int i=0;i<7;i++) {

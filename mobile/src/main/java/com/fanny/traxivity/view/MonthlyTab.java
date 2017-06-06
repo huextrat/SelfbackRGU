@@ -12,6 +12,8 @@ import android.widget.ListView;
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.database.activity.ActivityManager;
 import com.fanny.traxivity.database.activity.DbActivity;
+import com.fanny.traxivity.database.stepsManagerBeta.DbSteps;
+import com.fanny.traxivity.database.stepsManagerBeta.StepsManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +21,7 @@ import java.util.List;
 
 
 /**
- * Created by extra on 22/05/2017.
+ * Created by huextrat.
  */
 
 public class MonthlyTab extends Fragment {
@@ -30,13 +32,12 @@ public class MonthlyTab extends Fragment {
 
         ListView listView = (ListView) v.findViewById(R.id.listview);
 
-
-
-        ActivityManager managerActivity = new ActivityManager();
-        List<DbActivity> listActivity = managerActivity.getAllActivityDay(new Date());
+        StepsManager managerSteps = new StepsManager();
+        List<DbSteps> listActivity = managerSteps.getAllStepsDay(new Date());
         myListActivity = new ArrayList<>(listActivity.size());
-        for(DbActivity activity : listActivity){
-            myListActivity.add(activity.getActivity()+" - "+activity.getStartTime()+ " - "+ activity.getEndTime()+ " - "+activity.getNbSteps());
+
+        for(DbSteps activity : listActivity){
+            myListActivity.add(activity.getStartTime()+ " - "+activity.getNbSteps());
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, myListActivity);

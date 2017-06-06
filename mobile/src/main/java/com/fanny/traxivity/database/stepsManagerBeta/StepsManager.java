@@ -1,5 +1,7 @@
 package com.fanny.traxivity.database.stepsManagerBeta;
 
+import com.fanny.traxivity.model.StepsListener;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,8 +20,9 @@ import io.realm.Sort;
 
 public class StepsManager {
     private Realm realm;
+    private StepsListener listener;
 
-    public void insertActivity(DbSteps mySteps) {
+    public void insertNew(DbSteps mySteps) {
         List<DbSteps> lastAddedActivityList = new ArrayList<>();
         DbSteps lastAddedActivity;
 
@@ -35,7 +38,7 @@ public class StepsManager {
 
         if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
 
-            DbSteps updateSteps = new DbSteps(lastAddedActivity.getStartTime(),lastAddedActivity.getNbSteps()+mySteps.getNbSteps());
+            DbSteps updateSteps = new DbSteps(lastAddedActivity.getStartTime(),mySteps.getNbSteps());
 
             realm.beginTransaction();
             removeLastActivity();
@@ -62,6 +65,11 @@ public class StepsManager {
         else {
             return;
         }
+        listener.onChange();
+    }
+
+    public void setListener(StepsListener listener){
+        this.listener = listener;
     }
 
     /**

@@ -1,5 +1,9 @@
 package com.fanny.traxivity.model;
 
+/**
+ * Created by Yan'Shin on 30/05/2017.
+ */
+
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;

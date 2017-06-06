@@ -1,6 +1,5 @@
 package com.fanny.traxivity;
 
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,7 +17,6 @@ import android.widget.TextView;
 
 import com.fanny.traxivity.view.AddNewActivity;
 import com.fanny.traxivity.admin.view.activities.MainMenu;
-import com.fanny.traxivity.model.ActivityRecognitionService;
 import com.fanny.traxivity.model.SlidingTabLayout;
 import com.fanny.traxivity.model.ViewPagerAdapter;
 import com.fanny.traxivity.view.GoalInputActivity;
@@ -126,8 +124,6 @@ public class MainActivity extends AppCompatActivity
 
             }
         });
-
-        startService(new Intent(this, ActivityRecognitionService.class));
     }
 
     public void createFolder(String nameFolder) {
@@ -169,7 +165,6 @@ public class MainActivity extends AppCompatActivity
             }
         }
         else if (id == R.id.nav_logout) {
-            stopService(new Intent(this, ActivityRecognitionService.class));
             FirebaseAuth.getInstance().signOut();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
         }

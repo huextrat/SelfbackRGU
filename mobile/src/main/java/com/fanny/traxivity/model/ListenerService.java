@@ -1,6 +1,5 @@
 package com.fanny.traxivity.model;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -8,32 +7,29 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.fanny.traxivity.database.activity.ActivityManager;
-import com.fanny.traxivity.database.activity.DbActivity;
+import com.fanny.traxivity.MainActivity;
+import com.fanny.traxivity.database.stepsManagerBeta.DbSteps;
+import com.fanny.traxivity.database.stepsManagerBeta.StepsManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.wearable.DataEvent;
 import com.google.android.gms.wearable.DataEventBuffer;
+import com.google.android.gms.wearable.DataItem;
 import com.google.android.gms.wearable.DataMap;
 import com.google.android.gms.wearable.DataMapItem;
-import com.google.android.gms.wearable.MessageEvent;
 import com.google.android.gms.wearable.Wearable;
 import com.google.android.gms.wearable.WearableListenerService;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 /**
  * Listen to the changes in the Data Layer Event, used to send the collected data from the wear to the mobile
  */
 public class ListenerService extends WearableListenerService implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+
+    private final String TAG="ListenerService";
 
     /**
      * String to define the path for retrieving the DataMapRequest.
@@ -59,6 +55,7 @@ public class ListenerService extends WearableListenerService implements GoogleAp
             e.printStackTrace();
         }
 
+
         googleClient = new GoogleApiClient.Builder(this)
                 .addApi(Wearable.API)
                 .addConnectionCallbacks(this)
@@ -70,193 +67,35 @@ public class ListenerService extends WearableListenerService implements GoogleAp
 
     /**
      * When there is a change in the Data Layer Event, writes the new data in a file and call sendBroadcast to update the visualization in the main activity
-     * @see ListenerService#sendBroadcast()
      * @param dataEvents
      */
     @Override
     public void onDataChanged(DataEventBuffer dataEvents) {
 
-        int dur = Toast.LENGTH_SHORT;
-        Context context = getApplicationContext();
-        Toast toast = Toast.makeText(context, "Data Changed", dur);
-        //toast.show();
-
-        System.out.println("Data Changed!");
-
         for (DataEvent event : dataEvents) {
-
-            // Check the data type
             if (event.getType() == DataEvent.TYPE_CHANGED) {
-                // Check the data path
-                String path = event.getDataItem().getUri().getPath();
-                if (path.equals(WEARABLE_DATA_PATH)) {
+                // DataItem changed
+                DataItem item = event.getDataItem();
+                if (item.getUri().getPath().compareTo(WEARABLE_DATA_PATH) == 0) {
+                    DataMap dataMap = DataMapItem.fromDataItem(item).getDataMap();
+                    Long timestamp = dataMap.getLong("timestamp");
+                    int stepcount = dataMap.getInt("stepcount");
 
-                    DataMapItem dataMapItem = DataMapItem.fromDataItem(event.getDataItem());
-                    DataMap dataMap = dataMapItem.getDataMap();
+                    Log.d(TAG,"Received data from the wearable");
+                    Log.d(TAG,"Timestamp : "+ timestamp.toString());
+                    Log.d(TAG,"Stepcount : "+Integer.toString(stepcount));
 
-                    String fileName = dataMap.getString("fileName");
-                    String data = dataMap.getString("data");
-
-                    String[] items = data.split("\\r?\\n");
-
-                    ActivityManager manager = new ActivityManager();
-                    ArrayList<String> activityL = new ArrayList<>();
-
-                    for (String item : items)
-                    {
-                        String[] activities = item.split(",");
-
-                        for (String activity : activities) {
-                            activityL.add(activity);
-                        }
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.setTimeInMillis(Long.parseLong(activityL.get(0)));
-                        Date d = calendar.getTime();
-
-                        if(activityL.get(2).equals("0")){
-                            DbActivity myActivity = new DbActivity(d, "Running", Integer.parseInt(activityL.get(3)));
-                            manager.insertActivity(myActivity);
-                        }
-                        else if(activityL.get(2).equals("1")){
-                            DbActivity myActivity = new DbActivity(d, "Inactive", Integer.parseInt(activityL.get(3)));
-                            manager.insertActivity(myActivity);
-                        }
-                        else if(activityL.get(2).equals("2")){
-                            DbActivity myActivity = new DbActivity(d, "Stairs", Integer.parseInt(activityL.get(3)));
-                            manager.insertActivity(myActivity);
-                        }
-                        else if(activityL.get(2).equals("3")){
-                            DbActivity myActivity = new DbActivity(d, "Standing", Integer.parseInt(activityL.get(3)));
-                            manager.insertActivity(myActivity);
-                        }
-                        else if(activityL.get(2).equals("4")){
-                            DbActivity myActivity = new DbActivity(d, "Walking", Integer.parseInt(activityL.get(3)));
-                            manager.insertActivity(myActivity);
-                        }
-                        activityL.clear();
-                    }
-
-                    //Log.d("test",data);
-                    writeToFile(fileName, data);
-                    sendBroadcast();
-
-                    /*
-                    Map<String,DataItemAsset> assets = event.getDataItem().getAssets();
-
-                    System.out.println("Assets: "+assets.size());
-
-                    for (String key :assets.keySet()){
-                        DataItemAsset asset = assets.get(key);
-                        System.out.println("ID: "+asset.getId());
-                        System.out.println("Data Item Key"+asset.getId());
-                    }
-
-                    System.out.println("Data Map Keys: ");
-                   for (String key: dataMap.keySet()){
-                       System.out.println(key);
-                   }
-
-
-                    //Asset asset = dataMap.get("data");
-                    //System.out.println("Asset: ");
-                    //System.out.println(asset.getUri().getPath());
-                    //System.out.println(new String(asset.getData()));
-
-                    ConnectionResult result = googleClient.blockingConnect();
-                    if (result.isSuccess()){
-                        System.out.println("Connection Succeeded!");
-                        toast.setText("Connection Succeeded");
-                        //toast.show();
-                        Asset asset = dataMap.getAsset("data");
-                        InputStream assetInputStream = Wearable.DataApi.getFdForAsset(googleClient, asset).await().getInputStream();
-                        googleClient.disconnect();
-                        if (assetInputStream != null){
-                            try {
-                                BufferedReader br = new BufferedReader(new InputStreamReader(assetInputStream));
-                                String data = "";
-                                String line;
-                                //System.out.println("Asset Content: ");
-                                while ((line = br.readLine()) != null) {
-                                    //System.out.println(line);
-                                    data += line+"\n";
-                                }
-
-
-                                writeToFile(fileName, data);
-
-                                sendBroadcast();
-
-                            }catch(IOException e){
-                                e.printStackTrace();
-                            }
-                        }else{
-                            System.out.println("Asset Input stream is null");
-                            toast.setText("Asset Input stream is null");
-                            //toast.show();
-                        }
-                    }else{
-                        System.out.println("Connection Failed!");
-                        toast.setText("Connection Failed!");
-                        //toast.show();
-                    }
-
-                    */
-
+                    StepsManager managerSteps = new StepsManager();
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTimeInMillis(timestamp);
+                    Date d = cal.getTime();
+                    DbSteps newActivity = new DbSteps(d, stepcount);
+                    managerSteps.insertNew(newActivity);
                 }
-
-
+            } else if (event.getType() == DataEvent.TYPE_DELETED) {
+                // DataItem deleted
             }
         }
-
-
-    }
-
-
-    public void writeToFile(String fileName, String data){
-
-        Log.d("DATA",data);
-        /* if (isExternalStorageWritable()) { */
-            File file = new File(getFilesDir() + DATA_FOLDER, fileName+".csv");
-
-            FileWriter filewriter = null;
-
-            try {
-                file.createNewFile();
-                filewriter = new FileWriter(file, true);
-                filewriter.write(data);
-                filewriter.flush();
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally{
-                if (filewriter != null){
-                    try{
-                        filewriter.close();
-                    }catch(IOException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-        /*} else {
-            CharSequence text = "The external storage is not writable";
-            int duration = Toast.LENGTH_SHORT;
-
-            Toast toast = Toast.makeText(this, text, duration);
-            toast.show();
-        } */
-    }
-
-    public void sendBroadcast() {
-        Intent intent = new Intent("newData");
-        LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
-    }
-
-    @Override
-    public void onMessageReceived(MessageEvent messageEvent) {
-        super.onMessageReceived(messageEvent);
-        String event = messageEvent.getPath();
-        Log.d("test", event);
     }
 
     /**
@@ -270,7 +109,7 @@ public class ListenerService extends WearableListenerService implements GoogleAp
 
     @Override
     public void onConnected(@Nullable Bundle bundle) {
-
+        Wearable.DataApi.addListener(googleClient, this);
     }
 
     @Override

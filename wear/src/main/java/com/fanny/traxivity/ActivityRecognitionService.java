@@ -1,10 +1,11 @@
-package com.fanny.traxivity.model;
+package com.fanny.traxivity;
 
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.util.Log;
 import android.support.annotation.Nullable;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -16,22 +17,28 @@ import com.google.android.gms.common.api.GoogleApiClient;
 
 public class ActivityRecognitionService extends Service implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
+    private final String TAG="RecognitionService";
+
     private GoogleApiClient mApiClient;
 
     public void onCreate(){
         super.onCreate();
+
 
         mApiClient = new GoogleApiClient.Builder(this).
                 addApi(com.google.android.gms.location.ActivityRecognition.API).
                 addConnectionCallbacks(this).
                 addOnConnectionFailedListener(this).
                 build();
+
         mApiClient.connect();
+
+        Log.d(TAG,"End of the onCreate");
     }
 
     @Override
     public void onConnected(Bundle bundle) {
-        System.out.println("ActivityRecogniserService connected");
+        Log.d(TAG,"Beginning of the onConnected");
         Intent intent = new Intent(this, ActivityRecogniserService.class);
         PendingIntent pendingIntent = PendingIntent.getService(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         com.google.android.gms.location.ActivityRecognition.ActivityRecognitionApi.requestActivityUpdates(mApiClient, 1000, pendingIntent);
