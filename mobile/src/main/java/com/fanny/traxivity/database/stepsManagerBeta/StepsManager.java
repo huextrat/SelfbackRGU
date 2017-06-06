@@ -1,13 +1,12 @@
 package com.fanny.traxivity.database.stepsManagerBeta;
 
-import com.fanny.traxivity.model.StepsListener;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -20,7 +19,6 @@ import io.realm.Sort;
 
 public class StepsManager {
     private Realm realm;
-    private StepsListener listener;
 
     public void insertNew(DbSteps mySteps) {
         List<DbSteps> lastAddedActivityList = new ArrayList<>();
@@ -47,14 +45,14 @@ public class StepsManager {
         }
         else if(mySteps.getHoursRange() != lastAddedActivity.getHoursRange()){
             Calendar cal = Calendar.getInstance();
-            cal.setTime(lastAddedActivity.getStartTime());
+            cal.setTime(mySteps.getStartTime());
             cal.add(Calendar.HOUR, 0);
             cal.set(Calendar.MINUTE, 0);
             cal.set(Calendar.SECOND, 0);
             Date endTime = cal.getTime();
             cal.clear();
 
-            DbSteps newSteps = new DbSteps(mySteps.getStartTime(),mySteps.getNbSteps());
+            DbSteps newSteps = new DbSteps(mySteps.getStartTime(),mySteps.getNbSteps()-getTotalStepsDay(endTime));
 
             newSteps.setStartTime(endTime);
 
@@ -65,11 +63,6 @@ public class StepsManager {
         else {
             return;
         }
-        listener.onChange();
-    }
-
-    public void setListener(StepsListener listener){
-        this.listener = listener;
     }
 
     /**

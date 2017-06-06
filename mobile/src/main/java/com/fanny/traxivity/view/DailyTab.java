@@ -18,7 +18,7 @@ import com.fanny.traxivity.database.inactivity.DbInactivity;
 import com.fanny.traxivity.database.stepsManagerBeta.DbSteps;
 import com.fanny.traxivity.database.stepsManagerBeta.StepsManager;
 import com.fanny.traxivity.model.DateUtil;
-import com.fanny.traxivity.model.StepsListener;
+import com.fanny.traxivity.model.ListenerService;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import at.grabner.circleprogress.CircleProgressView;
 import at.grabner.circleprogress.TextMode;
@@ -48,7 +50,7 @@ public class DailyTab extends Fragment {
     private StepsManager managerSteps;
     private GoalManager managerGoal;
     private Date currentDate;
-    private int nbSteps;
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.daily_tab,container,false);
@@ -81,15 +83,6 @@ public class DailyTab extends Fragment {
         managerActivity = new ActivityManager();
         managerGoal = new GoalManager();
         managerSteps = new StepsManager();
-
-        managerSteps.setListener(new StepsListener() {
-            @Override
-            public void onChange() {
-                dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-                dailyCircle.setTextMode(TextMode.TEXT);
-                dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
-            }
-        });
 
         final DbGoal dailyGoalSteps = managerGoal.goalStepsDaily(currentDate);
         final DbGoal dailyGoalDuration = managerGoal.goalDurationDaily(currentDate);
@@ -148,7 +141,6 @@ public class DailyTab extends Fragment {
          }
          else if(dailyGoalDuration != null){
              dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-             //dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerActivity.getTotalStepsDay(currentDate)),2000);
              dailyCircle.setTextMode(TextMode.TEXT);
              dailyCircle.setText(managerActivity.getTotalStepsDay(currentDate)+" steps");
              dailyCircle.setOnClickListener(new View.OnClickListener() {
@@ -238,6 +230,8 @@ public class DailyTab extends Fragment {
         realm.delete(DbActivity.class);
         realm.delete(DbGoal.class);
         realm.delete(DbInactivity.class);
+        realm.delete(DbSteps.class);
         realm.commitTransaction();
     }
+
 }

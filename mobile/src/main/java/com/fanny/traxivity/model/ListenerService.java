@@ -23,6 +23,8 @@ import com.google.android.gms.wearable.WearableListenerService;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Listen to the changes in the Data Layer Event, used to send the collected data from the wear to the mobile
