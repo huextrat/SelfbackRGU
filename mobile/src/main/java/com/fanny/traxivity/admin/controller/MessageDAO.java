@@ -46,16 +46,29 @@ public class MessageDAO {
 
     public boolean addMessage(Message message){
         if(message != null){
-            String category = message.getStrBctCategory();
+            String category = message.getCategory();
+            String dayWeek = message.getDayWeek();
 
-            String messageID =  mDatabase.child(category).child(message.getAchievement().toString()).push().getKey();
-            try{
-                mDatabase.child(category).child(message.getAchievement().toString()).child(messageID).setValue(message);
+            if (dayWeek.equals("")) {
+                String messageID =  mDatabase.child(category).child(message.getAchievement().toString()).push().getKey();
+                try{
+                    mDatabase.child(category).child(message.getAchievement().toString()).child(messageID).setValue(message);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+                return true;
             }
-            catch(Exception e){
-                System.out.println(e.getMessage());
+            else{
+                String messageID =  mDatabase.child(dayWeek).child(category).child(message.getAchievement().toString()).push().getKey();
+                try{
+                    mDatabase.child(dayWeek).child(category).child(message.getAchievement().toString()).child(messageID).setValue(message);
+                }
+                catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+                return true;
             }
-            return true;
         }
         else{
             return false;
@@ -86,18 +99,65 @@ public class MessageDAO {
 
     }
 
+    public void getMessages(final MessagesManager.Achievement achievementLevel, final String category, final String dayWeek, final TaskCompletionSource<ArrayList<Message>> messagesGetter){
+        final ArrayList<Message> messagesList = new ArrayList<>();
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if(dataSnapshot.hasChild(dayWeek)){
+                    if(dataSnapshot.child(dayWeek).hasChild(category.toString())){
+                        if(dataSnapshot.child(dayWeek).child(category.toString()).hasChild(achievementLevel.toString())){
+                            for(DataSnapshot D : dataSnapshot.child(dayWeek).child(category.toString()).child(achievementLevel.toString()).getChildren()){
+                                messagesList.add(D.getValue(Message.class));
+                            }
+                        }
+                    }
+                }
+                messagesGetter.setResult(messagesList);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
     public void updateMessage(final Message messageToEdit, final Message messageEdited){
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(messageToEdit.getStrBctCategory())){
-                    if(dataSnapshot.child(messageToEdit.getStrBctCategory()).hasChild(messageToEdit.getAchievement().toString())){
-                        for(DataSnapshot D : dataSnapshot.child(messageToEdit.getStrBctCategory()).child(messageToEdit.getAchievement().toString()).getChildren()){
-                            Message messageToCheck = D.getValue(Message.class);
-                            if(messageToCheck.getContent().equals(messageToEdit.getContent())){
-                                if(messageToCheck.getQuote() == null && messageToEdit.getQuote() == null || (messageToCheck.getQuote() != null && messageToCheck.getQuote().getAuthor().equals(messageToEdit.getQuote().getAuthor()) &&  messageToCheck.getQuote().getContent().equals(messageToEdit.getQuote().getContent()))){
-                                    mDatabase.child(messageToEdit.getStrBctCategory()).child(messageToEdit.getAchievement().toString()).child(D.getKey()).removeValue();
-                                    addMessage(messageEdited);
+                if(messageToEdit.getDayWeek().equals("")){
+                    if(dataSnapshot.hasChild(messageToEdit.getCategory())){
+                        if(dataSnapshot.child(messageToEdit.getCategory()).hasChild(messageToEdit.getAchievement().toString())){
+                            for(DataSnapshot D : dataSnapshot.child(messageToEdit.getCategory()).child(messageToEdit.getAchievement().toString()).getChildren()){
+                                Message messageToCheck = D.getValue(Message.class);
+                                if(messageToCheck.getContent().equals(messageToEdit.getContent())){
+                                    if(messageToCheck.getQuote() == null && messageToEdit.getQuote() == null || (messageToCheck.getQuote() != null && messageToCheck.getQuote().getAuthor().equals(messageToEdit.getQuote().getAuthor()) &&  messageToCheck.getQuote().getContent().equals(messageToEdit.getQuote().getContent()))){
+                                        mDatabase.child(messageToEdit.getCategory()).child(messageToEdit.getAchievement().toString()).child(D.getKey()).removeValue();
+                                        addMessage(messageEdited);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else {
+                    String dayWeek = messageToEdit.getDayWeek();
+                    String category = messageToEdit.getCategory();
+                    MessagesManager.Achievement achievementLevel = messageToEdit.getAchievement();
+                    if(dataSnapshot.hasChild(dayWeek)){
+                        if(dataSnapshot.child(dayWeek).hasChild(category)){
+                            if(dataSnapshot.child(dayWeek).child(category).hasChild(achievementLevel.toString())){
+                                for(DataSnapshot D : dataSnapshot.child(dayWeek).child(category).child(achievementLevel.toString()).getChildren()){
+                                    Message messageToCheck = D.getValue(Message.class);
+                                    if(messageToCheck.getContent().equals(messageToEdit.getContent())){
+                                        if(messageToCheck.getQuote() == null && messageToEdit.getQuote() == null || (messageToCheck.getQuote() != null && messageToCheck.getQuote().getAuthor().equals(messageToEdit.getQuote().getAuthor()) &&  messageToCheck.getQuote().getContent().equals(messageToEdit.getQuote().getContent()))){
+                                            mDatabase.child(dayWeek).child(category).child(achievementLevel.toString()).child(D.getKey()).removeValue();
+                                            addMessage(messageEdited);
+                                        }
+                                    }
                                 }
                             }
                         }
@@ -116,18 +176,40 @@ public class MessageDAO {
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot.hasChild(message.getStrBctCategory())){
-                    if(dataSnapshot.child(message.getStrBctCategory()).hasChild(message.getAchievement().toString())){
-                        for(DataSnapshot D : dataSnapshot.child(message.getStrBctCategory()).child(message.getAchievement().toString()).getChildren()){
-                            Message messageToCheck = D.getValue(Message.class);
-                            if(messageToCheck.getContent().equals(message.getContent())){
-                                if(messageToCheck.getQuote() == null && message.getQuote() == null || (messageToCheck.getQuote() != null && messageToCheck.getQuote().getAuthor().equals(message.getQuote().getAuthor()) &&  messageToCheck.getQuote().getContent().equals(message.getQuote().getContent()))){
-                                    mDatabase.child(message.getStrBctCategory()).child(message.getAchievement().toString()).child(D.getKey()).removeValue();
+                if(message.getDayWeek().equals("")){
+                    if(dataSnapshot.hasChild(message.getCategory())){
+                        if(dataSnapshot.child(message.getCategory()).hasChild(message.getAchievement().toString())){
+                            for(DataSnapshot D : dataSnapshot.child(message.getCategory()).child(message.getAchievement().toString()).getChildren()){
+                                Message messageToCheck = D.getValue(Message.class);
+                                if(messageToCheck.getContent().equals(message.getContent())){
+                                    if(messageToCheck.getQuote() == null && message.getQuote() == null || (messageToCheck.getQuote() != null && messageToCheck.getQuote().getAuthor().equals(message.getQuote().getAuthor()) &&  messageToCheck.getQuote().getContent().equals(message.getQuote().getContent()))){
+                                        mDatabase.child(message.getCategory()).child(message.getAchievement().toString()).child(D.getKey()).removeValue();
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                else {
+                    String dayWeek = message.getDayWeek();
+                    String category = message.getCategory();
+                    MessagesManager.Achievement achievementLevel = message.getAchievement();
+                    if(dataSnapshot.hasChild(dayWeek)){
+                        if(dataSnapshot.child(dayWeek).hasChild(category)){
+                            if(dataSnapshot.child(dayWeek).child(category).hasChild(achievementLevel.toString())){
+                                for(DataSnapshot D : dataSnapshot.child(dayWeek).child(category).child(achievementLevel.toString()).getChildren()){
+                                    Message messageToCheck = D.getValue(Message.class);
+                                    if(messageToCheck.getContent().equals(message.getContent())){
+                                        if(messageToCheck.getQuote() == null && message.getQuote() == null || (messageToCheck.getQuote() != null && messageToCheck.getQuote().getAuthor().equals(message.getQuote().getAuthor()) &&  messageToCheck.getQuote().getContent().equals(message.getQuote().getContent()))){
+                                            mDatabase.child(dayWeek).child(category).child(achievementLevel.toString()).child(D.getKey()).removeValue();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
             }
 
             @Override
@@ -155,3 +237,4 @@ public class MessageDAO {
         });
     }
 }
+

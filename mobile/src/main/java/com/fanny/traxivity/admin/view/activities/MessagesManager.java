@@ -45,8 +45,6 @@ public class MessagesManager extends AppCompatActivity {
     private static final String TAG = MessagesManager.class.getSimpleName();
 
     private String messagesCategoriesFileName = "messagesCategoriesName";
-    private OutputStreamWriter outputStreamWriter;
-    private InputStream inputStream;
 
     private static Context context;
 
@@ -230,9 +228,11 @@ public class MessagesManager extends AppCompatActivity {
             }
         });
     }
+
     public boolean onOptionsItemSelected(MenuItem item){
         finish();
         return true;
     }
 
 }
+

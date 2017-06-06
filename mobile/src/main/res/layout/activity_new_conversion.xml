@@ -29,14 +29,13 @@
         android:textSize="16sp" />
 
     <EditText
+        android:id="@+id/et_stepsPerMinute"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
         android:ems="10"
-        android:id="@+id/et_stepsPerMinute"
-        android:textSize="12sp"
         android:hint="Steps/minute"
-        android:layout_marginBottom="10dp" />
+        android:inputType="numberDecimal"
+        android:textSize="12sp" />
 
     <Button
         android:text="ADD"

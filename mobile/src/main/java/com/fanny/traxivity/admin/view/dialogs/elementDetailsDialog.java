@@ -53,7 +53,7 @@ public class elementDetailsDialog extends DialogFragment {
             final View view = inflater.inflate(R.layout.message_details_dialog, null);
 
             TextView category = (TextView)view.findViewById(R.id.tv_md_category);
-            category.setText(message.getStrBctCategory());
+            category.setText(message.getCategory());
 
             TextView achLevel = (TextView)view.findViewById(R.id.tv_md_achLevel);
             achLevel.setText(message.getAchievement().toString());
@@ -113,9 +113,6 @@ public class elementDetailsDialog extends DialogFragment {
                 builder.setTitle("Message details");
             }
         }
-
-
-
         return builder.create();
     }
 

@@ -65,6 +65,22 @@
             android:name=".admin.view.activities.ConfirmationManager"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".admin.view.activities.MessagesManagerNoCate"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".admin.view.activities.DayWeekChoice"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".admin.view.activities.NewDayMessage"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".admin.view.activities.NewWeekMessage"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".model.ListenerService">
             <intent-filter>
                 <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
@@ -78,14 +94,6 @@
         </service>
         <service
             android:name=".model.SendFileService"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name=".model.ActivityRecognitionService"
-            android:enabled="true"
-            android:exported="true" />
-        <service
-            android:name=".model.ActivityRecogniserService"
             android:enabled="true"
             android:exported="true" />
 

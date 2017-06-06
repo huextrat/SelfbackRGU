@@ -31,6 +31,10 @@ public class MainMenu extends AppCompatActivity {
         Button bt_messagesManager = (Button)findViewById(R.id.bt_messages);
         Button bt_informationManager = (Button)findViewById(R.id.bt_information);
         Button bt_confirmationManager = (Button)findViewById(R.id.bt_confirmation);
+        Button bt_messagesNoCate = (Button)findViewById(R.id.bt_messagesNoCate);
+
+
+
 
         bt_activitiesManager.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,11 +67,18 @@ public class MainMenu extends AppCompatActivity {
                 startActivity(confirmationManagerActivity);
             }
         });
+
+        bt_messagesNoCate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent NewActivityActivity = new Intent(MainMenu.this, MessagesManagerNoCate.class);
+                startActivity(NewActivityActivity);
+            }
+        });
     }
 
     public boolean onOptionsItemSelected(MenuItem item){
-        Intent myIntent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivityForResult(myIntent, 0);
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
         return true;
     }
 }

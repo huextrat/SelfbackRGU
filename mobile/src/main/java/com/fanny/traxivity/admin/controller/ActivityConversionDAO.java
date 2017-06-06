@@ -44,7 +44,6 @@ public class ActivityConversionDAO {
             catch(Exception e){
                 System.out.println(e.getMessage());
             }
-
         }
     }
 
@@ -67,23 +66,6 @@ public class ActivityConversionDAO {
 
     }
 
-    public void updateConversion(final String activityName, final float newStepsConversion){
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                ActivityToSteps updatedOne = new ActivityToSteps(activityName, newStepsConversion);
-                if(activityName != null) {
-                    mDatabase.child(activityName).setValue(updatedOne);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-
     public void getConversion(final TaskCompletionSource<Float> conversionGetter, final String activityName){
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -99,6 +81,21 @@ public class ActivityConversionDAO {
             }
         });
 
+    }
+
+    public void updateConversion(final String activityName, final float newStepsConversion){
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                ActivityToSteps updatedOne = new ActivityToSteps(activityName, newStepsConversion);
+                mDatabase.child(activityName).setValue(updatedOne);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 }

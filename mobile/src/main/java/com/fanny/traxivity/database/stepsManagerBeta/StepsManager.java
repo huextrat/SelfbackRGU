@@ -34,6 +34,7 @@ public class StepsManager {
         }
         lastAddedActivity = lastAddedActivityList.get(0);
 
+        Map<Integer, DbSteps> map = getAllActivityDayByHours(new Date());
 
         if(mySteps.isSpecial()){
             DbSteps newSteps = new DbSteps(mySteps.getStartTime(), mySteps.getEndTime(),mySteps.getNbSteps());
@@ -55,7 +56,7 @@ public class StepsManager {
             DbSteps realmActivity = realm.copyToRealm(updateSteps);
             realm.commitTransaction();
         }
-        else if(mySteps.getHoursRange() != lastAddedActivity.getHoursRange()){
+        else if(mySteps.getHoursRange() != lastAddedActivity.getHoursRange() && !map.containsKey(mySteps.getHoursRange())){
             Calendar cal = Calendar.getInstance();
             cal.setTime(mySteps.getStartTime());
             cal.add(Calendar.HOUR, 0);
@@ -71,9 +72,6 @@ public class StepsManager {
             realm.beginTransaction();
             DbSteps realmActivity = realm.copyToRealm(newSteps);
             realm.commitTransaction();
-        }
-        else {
-            return;
         }
     }
 

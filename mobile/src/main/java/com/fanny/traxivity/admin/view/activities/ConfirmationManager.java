@@ -71,6 +71,8 @@ public class ConfirmationManager extends AppCompatActivity {
         final ConfirmationAdapter adapter = new ConfirmationAdapter(this, confirmationList);
         lv_conf.setAdapter(adapter);
 
+
+        //Launch a dialog to add a confirmation
         bt_addConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,12 +81,17 @@ public class ConfirmationManager extends AppCompatActivity {
             }
         });
 
+
+        //Fetch the confirmations in the DB based on the settings
         bt_searchConf.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Async tasks to fetch the messages and refresh the list once they're all pulled
                 getConfirmationTask = new TaskCompletionSource<>();
                 getConfirmationTaskWaiter = getConfirmationTask.getTask();
 
+                //Listener executed once the task is over
                 getConfirmationTaskWaiter.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
@@ -126,6 +133,8 @@ public class ConfirmationManager extends AppCompatActivity {
 
                 pb_conf.setVisibility(View.VISIBLE);
                 pb_conf.setIndeterminate(true);
+
+                //Start the async task via the DAO
                 ConfirmationDAO.getInstance().getConfirmation(type, getConfirmationTask);
             }
         });
@@ -135,6 +144,7 @@ public class ConfirmationManager extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 Confirmation confClicked = adapter.getItem(position);
 
+                //Launch a dialog to delete the confirmation
                 DialogFragment confDelete = elementDeleteDialog.newInstance(confClicked);
                 confDelete.show(getFragmentManager(),TAG);
 
@@ -148,3 +158,4 @@ public class ConfirmationManager extends AppCompatActivity {
         return true;
     }
 }
+

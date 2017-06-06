@@ -17,9 +17,19 @@ public class Message implements Parcelable{
     protected Quote quote;
 
     //protected MessagesManager.BCTCategory bctCategory;
-    protected String strBctCategory;
+    protected String category;
 
     protected MessagesManager.Achievement achievement;
+
+    protected String dayWeek;
+
+    public String getDayWeek() {
+        return dayWeek;
+    }
+
+    public void setDayWeek(String dayWeek) {
+        this.dayWeek = dayWeek;
+    }
 
     public Quote getQuote() {
         return quote;
@@ -29,8 +39,8 @@ public class Message implements Parcelable{
         return content;
     }
 
-    public String getStrBctCategory() {
-        return strBctCategory;
+    public String getCategory() {
+        return category;
     }
 
     public MessagesManager.Achievement getAchievement() {
@@ -41,8 +51,8 @@ public class Message implements Parcelable{
         this.quote = quote;
     }
 
-    public void setStrBctCategory(String strBctCategory) {
-        this.strBctCategory = strBctCategory;
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public void setAchievement(MessagesManager.Achievement achievement) {
@@ -62,8 +72,9 @@ public class Message implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(content);
         dest.writeParcelable(quote, flags);
-        dest.writeString(strBctCategory);
+        dest.writeString(category);
         dest.writeString(achievement.name());
+        dest.writeString(dayWeek);
     }
 
     // Creator
@@ -82,15 +93,17 @@ public class Message implements Parcelable{
     public Message(Parcel in) {
         content = in.readString();
         quote = in.readParcelable(Quote.class.getClassLoader());
-        strBctCategory = in.readString();
+        category = in.readString();
         achievement = MessagesManager.Achievement.valueOf(in.readString());
+        dayWeek = in.readString();
     }
 
     public Message(){
         quote = null;
         content = "";
-        strBctCategory = "";
+        category = "";
         achievement = MessagesManager.Achievement.Low;
+        dayWeek = "";
     }
 
     public Message(Message message){
@@ -98,14 +111,15 @@ public class Message implements Parcelable{
         if(message.getQuote() != null)
             this.quote = new Quote(message.getQuote().getAuthor(), message.getQuote().getContent());
         this.achievement = message.getAchievement();
-        this.strBctCategory = message.getStrBctCategory();
+        this.category = message.getCategory();
     }
 
-    public Message(String content, Quote quote, String strBctCategory, MessagesManager.Achievement achievement) {
+    public Message(String content, Quote quote, String category, MessagesManager.Achievement achievement, String dayWeek) {
         this.content = content;
         this.quote = quote;
-        this.strBctCategory = strBctCategory;
+        this.category = category;
         this.achievement = achievement;
+        this.dayWeek = dayWeek;
     }
 }
 

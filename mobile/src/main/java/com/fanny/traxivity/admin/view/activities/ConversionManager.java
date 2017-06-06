@@ -64,6 +64,8 @@ public class ConversionManager extends AppCompatActivity {
         Button bt_conversionEdit = (Button)findViewById(R.id.bt_conversionEdit);
         Button bt_addConversion = (Button)findViewById(R.id.bt_startNewConversion);
 
+
+        //Tasks to get the list of conversions in the database
         getConversionTask = new TaskCompletionSource<>();
         getConversionTaskWaiter = getConversionTask.getTask();
 
@@ -72,6 +74,7 @@ public class ConversionManager extends AppCompatActivity {
 
         sp_activityList.setAdapter(categories_adapter);
 
+        //Listener executed once all the categories are pulled
         getConversionTaskWaiter.addOnCompleteListener(new OnCompleteListener() {
             @Override
             public void onComplete(@NonNull Task task) {
@@ -83,9 +86,7 @@ public class ConversionManager extends AppCompatActivity {
                         activityList.add(ats.getActivityName());
                     }
 
-                    if(activityConversionList.size() != 0) {
-                        et_conversion.setText(Float.toString(activityConversionList.get(0).getNumberStepsPerMinute()));
-                    }
+                    et_conversion.setText(Float.toString(activityConversionList.get(0).getNumberStepsPerMinute()));
 
                     categories_adapter.notifyDataSetChanged();
                 }
@@ -96,14 +97,13 @@ public class ConversionManager extends AppCompatActivity {
             }
         });
 
+        //Start the async task
         ActivityConversionDAO.getInstance().getConversionList(getConversionTask);
-
 
         sp_activityList.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(activityConversionList.size() != 0){
-                    selectedActivity = activityConversionList.get(position).getActivityName();
                     et_conversion.setText(Float.toString(activityConversionList.get(position).getNumberStepsPerMinute()));
                 }
             }
@@ -125,9 +125,12 @@ public class ConversionManager extends AppCompatActivity {
         bt_conversionEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ActivityConversionDAO.getInstance().updateConversion(sp_activityList.getSelectedItem().toString(),Float.parseFloat(et_conversion.getText().toString()));
-                activityConversionList.get(sp_activityList.getSelectedItemPosition()).setNumberStepsPerMinute(Float.parseFloat(et_conversion.getText().toString()));
-                Toast.makeText(context, "Conversion edited", Toast.LENGTH_SHORT).show();
+                if(!sp_activityList.getSelectedItem().toString().equals("Loading list...")){
+                    selectedActivity = sp_activityList.getSelectedItem().toString();
+                    ActivityConversionDAO.getInstance().updateConversion(selectedActivity,Float.parseFloat(et_conversion.getText().toString()));
+                    activityConversionList.get(sp_activityList.getSelectedItemPosition()).setNumberStepsPerMinute(Float.parseFloat(et_conversion.getText().toString()));
+                    Toast.makeText(context, "Conversion edited", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -162,6 +165,7 @@ public class ConversionManager extends AppCompatActivity {
             });
 
             ActivityConversionDAO.getInstance().getConversionList(getConversionTask);
+
         }
     }
 

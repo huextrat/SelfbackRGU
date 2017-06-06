@@ -96,7 +96,7 @@ public class NewMessage extends AppCompatActivity {
                     break;
             }
 
-            int spinnerPosition = categories_adapter.getPosition(newMessage.getStrBctCategory());
+            int spinnerPosition = categories_adapter.getPosition(newMessage.getCategory());
             spinner_category.setSelection(spinnerPosition);
 
             if(newMessage.getQuote() != null)
@@ -118,7 +118,6 @@ public class NewMessage extends AppCompatActivity {
         bt_newQuote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 DialogFragment quoteDialog = new newQuoteDialog();
                 quoteDialog.show(getFragmentManager(), "new quote");
             }
@@ -141,7 +140,7 @@ public class NewMessage extends AppCompatActivity {
                     toEdit = new Message(newMessage);
                     toEdit.setQuote(editQuote);
                 }
-                newMessage.setStrBctCategory(spinner_category.getSelectedItem().toString());
+                newMessage.setCategory(spinner_category.getSelectedItem().toString());
                 int rb_index = rg_achievementLevel.getCheckedRadioButtonId();
                 if(rb_index == R.id.r_low){
                     newMessage.setAchievement(MessagesManager.Achievement.Low);
@@ -178,3 +177,4 @@ public class NewMessage extends AppCompatActivity {
         return true;
     }
 }
+

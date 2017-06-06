@@ -18,6 +18,7 @@ import com.fanny.traxivity.model.ActivityToSteps;
  * Created by extra on 30/05/2017.
  */
 
+
 public class NewConversion extends AppCompatActivity {
     private static final String TAG = MessagesManager.class.getSimpleName();
 
@@ -38,6 +39,7 @@ public class NewConversion extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String activityName = et_activityName.getText().toString();
+
                 int stepsPerMinute = Integer.valueOf(et_stepsPerMinute.getText().toString());
 
                 ActivityToSteps newConversion = new ActivityToSteps(activityName, stepsPerMinute);
@@ -62,3 +64,4 @@ public class NewConversion extends AppCompatActivity {
         return true;
     }
 }
+

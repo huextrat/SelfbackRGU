@@ -1,4 +1,8 @@
 package com.fanny.traxivity.view;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -32,13 +36,16 @@ import java.util.List;
  * Created by huextrat.
  */
 public class WeeklyTab extends Fragment {
+    private StepsManager managerSteps;
+    private BarDataSet set;
+    private Date dateImpl;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.weekly_tab,container,false);
         // DonutProgress weeklyCircle = (DonutProgress) v.findViewById(R.id.circle_progress_week);
         //TextView weeklyGoalTv = (TextView) v.findViewById(R.id.goal_weekly);
-        Date currentDate = new Date();
-        HorizontalBarChart graphChart = (HorizontalBarChart) v.findViewById(R.id.barChart);
+        final Date currentDate = new Date();
+        final HorizontalBarChart graphChart = (HorizontalBarChart) v.findViewById(R.id.barChart);
         graphChart.setScaleEnabled(false);
         graphChart.setDragEnabled(false);
         graphChart.setPinchZoom(false);
@@ -47,9 +54,9 @@ public class WeeklyTab extends Fragment {
         xAxis.setAxisMaximum(6f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
-        YAxis yAxisL = graphChart.getAxisLeft();
+        final YAxis yAxisL = graphChart.getAxisLeft();
         yAxisL.setDrawGridLines(false);
-        YAxis yAxisR = graphChart.getAxisRight();
+        final YAxis yAxisR = graphChart.getAxisRight();
         yAxisR.setDrawLabels(false); // no axis labels
         yAxisR.setDrawAxisLine(false); // no axis line
         yAxisR.setDrawGridLines(false); // no grid lines
@@ -72,16 +79,16 @@ public class WeeklyTab extends Fragment {
         yAxisR2.setDrawGridLines(false); // no grid lines
         yAxisR2.setDrawZeroLine(true); // draw a zero line*/
         //ActivityManager managerActivity = new ActivityManager();
-        StepsManager managerSteps = new StepsManager();
-        GoalManager managerGoal = new GoalManager();
-        InactivityManager managerInactivity = new InactivityManager();
+        managerSteps = new StepsManager();
+        final GoalManager managerGoal = new GoalManager();
+        final InactivityManager managerInactivity = new InactivityManager();
         final DbGoal dailyGoalSteps = managerGoal.goalStepsDaily(currentDate);
         final DbGoal dailyGoalDuration = managerGoal.goalDurationDaily(currentDate);
-        List<BarEntry> entries = new ArrayList<>();
-        Calendar c = Calendar.getInstance();
+        final List<BarEntry> entries = new ArrayList<>();
+        final Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        Date dateImpl = c.getTime();
-        BarDataSet set;
+        dateImpl = c.getTime();
+
         String[] dataXAxis = new String[]{
                 "Mon","Tue","Wed","Thu"," Fri","Sat","Sun"
         };
@@ -89,6 +96,7 @@ public class WeeklyTab extends Fragment {
         xAxis.setValueFormatter(xValueFromatter);
         // BarDataSet set2;
         float inactivityDuration;
+
         // List<BarEntry> entries2 = new ArrayList<>();
         if (dailyGoalSteps != null) {
             float stepsNumber = (float) dailyGoalSteps.getStepsNumber();
