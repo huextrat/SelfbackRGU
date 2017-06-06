@@ -1,8 +1,4 @@
 package com.fanny.traxivity.view;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,12 +6,16 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import com.fanny.traxivity.database.activity.ActivityManager;
 import com.fanny.traxivity.database.goal.DbGoal;
 import com.fanny.traxivity.database.goal.GoalManager;
 import com.fanny.traxivity.database.inactivity.InactivityManager;
 import com.fanny.traxivity.database.stepsManagerBeta.StepsManager;
 import com.fanny.traxivity.model.DateUtil;
 import com.fanny.traxivity.model.MyXAxisValueFormatterDays;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -32,18 +32,13 @@ import java.util.List;
  * Created by huextrat.
  */
 public class WeeklyTab extends Fragment {
-    private BroadcastReceiver broadCastNewMessage;
-    private List<BarEntry> entries;
-    private Date dateImpl;
-    private BarDataSet set;
-    private LimitLine limitLine;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.weekly_tab,container,false);
         // DonutProgress weeklyCircle = (DonutProgress) v.findViewById(R.id.circle_progress_week);
         //TextView weeklyGoalTv = (TextView) v.findViewById(R.id.goal_weekly);
-        final Date currentDate = new Date();
-        final HorizontalBarChart graphChart = (HorizontalBarChart) v.findViewById(R.id.barChart);
+        Date currentDate = new Date();
+        HorizontalBarChart graphChart = (HorizontalBarChart) v.findViewById(R.id.barChart);
         graphChart.setScaleEnabled(false);
         graphChart.setDragEnabled(false);
         graphChart.setPinchZoom(false);
@@ -52,12 +47,15 @@ public class WeeklyTab extends Fragment {
         xAxis.setAxisMaximum(6f);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawGridLines(false);
-        graphChart.getAxisLeft().setDrawGridLines(false);
-        final YAxis yAxisR = graphChart.getAxisRight();
+        YAxis yAxisL = graphChart.getAxisLeft();
+        yAxisL.setDrawGridLines(false);
+        YAxis yAxisR = graphChart.getAxisRight();
         yAxisR.setDrawLabels(false); // no axis labels
         yAxisR.setDrawAxisLine(false); // no axis line
         yAxisR.setDrawGridLines(false); // no grid lines
         yAxisR.setDrawZeroLine(true); // draw a zero line
+        yAxisL.setAxisMinimum(0f);
+        yAxisR.setAxisMinimum(0f);
         /*HorizontalBarChart graphChart2 = (HorizontalBarChart) v.findViewById(R.id.barChart2);
         graphChart2.setScaleEnabled(false);
         graphChart2.setDragEnabled(false);
@@ -73,24 +71,22 @@ public class WeeklyTab extends Fragment {
         yAxisR2.setDrawAxisLine(false); // no axis line
         yAxisR2.setDrawGridLines(false); // no grid lines
         yAxisR2.setDrawZeroLine(true); // draw a zero line*/
-
         //ActivityManager managerActivity = new ActivityManager();
-        final StepsManager managerSteps = new StepsManager();
-        final GoalManager managerGoal = new GoalManager();
+        StepsManager managerSteps = new StepsManager();
+        GoalManager managerGoal = new GoalManager();
         InactivityManager managerInactivity = new InactivityManager();
         final DbGoal dailyGoalSteps = managerGoal.goalStepsDaily(currentDate);
         final DbGoal dailyGoalDuration = managerGoal.goalDurationDaily(currentDate);
-        entries = new ArrayList<>();
-        final Calendar c = Calendar.getInstance();
+        List<BarEntry> entries = new ArrayList<>();
+        Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        dateImpl = c.getTime();
+        Date dateImpl = c.getTime();
+        BarDataSet set;
         String[] dataXAxis = new String[]{
                 "Mon","Tue","Wed","Thu"," Fri","Sat","Sun"
         };
         MyXAxisValueFormatterDays xValueFromatter = new MyXAxisValueFormatterDays(dataXAxis);
         xAxis.setValueFormatter(xValueFromatter);
-
-
         // BarDataSet set2;
         float inactivityDuration;
         // List<BarEntry> entries2 = new ArrayList<>();
@@ -98,10 +94,11 @@ public class WeeklyTab extends Fragment {
             float stepsNumber = (float) dailyGoalSteps.getStepsNumber();
            /* weeklyGoalTv.setText(Integer.toString(weeklyGoalSteps.getStepsNumber()) + " steps");
             weeklyCircle.setProgress(managerGoal.goalStatusStepsWeekly(currentDate, managerActivity.getTotalStepsDay(currentDate)));*/
-            limitLine = new LimitLine(stepsNumber, "Steps Objective");
+            LimitLine limitLine = new LimitLine(stepsNumber, "Steps Objective");
             limitLine.setLineColor(Color.CYAN);
-            // yAxisR.addLimitLine(limitLine);
+            yAxisL.addLimitLine(limitLine);
             yAxisR.setAxisMaximum(stepsNumber*1.5f);
+            yAxisL.setAxisMaximum(stepsNumber*1.5f);
             int nbsteps;
             for(int i=0;i<7;i++) {
                 nbsteps = managerSteps.getTotalStepsDay(dateImpl);
@@ -121,8 +118,9 @@ public class WeeklyTab extends Fragment {
             weeklyCircle.setProgress(managerGoal.goalStatusDurationWeekly(currentDate, managerActivity.getTotalActivityDay(currentDate)));*/
             LimitLine limitLine = new LimitLine(timeDuration, "Time Objective");
             limitLine.setLineColor(Color.CYAN);
-            //yAxisR.addLimitLine(limitLine);
+            yAxisL.addLimitLine(limitLine);
             yAxisR.setAxisMaximum(timeDuration*1.5f);
+            yAxisL.setAxisMaximum(timeDuration*1.5f);
             float duration;
             for(int i=0;i<7;i++) {
                 duration = (float) managerSteps.getTotalStepsDay(dateImpl);
@@ -140,8 +138,8 @@ public class WeeklyTab extends Fragment {
             // weeklyGoalTv.setText("No goal set");
             set = new BarDataSet(entries, "Activity");
             // set2 = new BarDataSet(entries2, "Inactivity");
-            yAxisR.setAxisMaximum(50000f);
-        }
+            yAxisR.setAxisMaximum(500f);
+            yAxisL.setAxisMaximum(500f);        }
       /*  set2.setColor(getResources().getColor(R.color.red));
         BarData data2 = new BarData(set2);
         data2.setBarWidth(0.6f); // set custom bar width
