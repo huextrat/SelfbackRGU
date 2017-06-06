@@ -1,8 +1,16 @@
 package com.fanny.traxivity.view;
 
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +58,8 @@ public class DailyTab extends Fragment {
     private StepsManager managerSteps;
     private GoalManager managerGoal;
     private Date currentDate;
+    private BroadcastReceiver broadCastNewMessage;
+    private List<BarEntry> entries;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -84,10 +94,24 @@ public class DailyTab extends Fragment {
         managerGoal = new GoalManager();
         managerSteps = new StepsManager();
 
+        entries = new ArrayList<>();
+
+        broadCastNewMessage = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
+                dailyCircle.setUnit("");
+                dailyCircle.setAutoTextSize(true);
+                dailyCircle.setUnitVisible(false);
+                dailyCircle.setTextMode(TextMode.TEXT);
+                dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
+            }
+        };
+
+        getActivity().registerReceiver(broadCastNewMessage, new IntentFilter("bcNewSteps"));
+
         final DbGoal dailyGoalSteps = managerGoal.goalStepsDaily(currentDate);
         final DbGoal dailyGoalDuration = managerGoal.goalDurationDaily(currentDate);
-
-        List<BarEntry> entries = new ArrayList<>();
 
          if (dailyGoalSteps != null) {
              dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
@@ -228,6 +252,12 @@ public class DailyTab extends Fragment {
         realm.delete(DbInactivity.class);
         realm.delete(DbSteps.class);
         realm.commitTransaction();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        getActivity().unregisterReceiver(broadCastNewMessage);
     }
 
 }

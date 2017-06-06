@@ -50,8 +50,10 @@ public class StepsManager {
             realm.beginTransaction();
             DbSteps realmActivity = realm.copyToRealm(newSteps);
             realm.commitTransaction();
+            return;
         }
-        else if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
+
+        if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
             DbSteps updateSteps;
 
             int stepsBefore = getTotalStepsDayForThisHours(new Date(), mySteps.getHoursRange());

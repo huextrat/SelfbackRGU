@@ -120,6 +120,7 @@ public class GoalInputActivity extends AppCompatActivity {
         minEtext = (EditText) findViewById(R.id.editText4);
         rdbSteps = (RadioButton) findViewById(R.id.radioButton5);
         rdbTime = (RadioButton) findViewById(R.id.radioButton4);
+        rdbTime.setEnabled(false);
         confirm = (Button) findViewById(R.id.appCompatButton3);
        /* dayButton = (Button) findViewById(R.id.appCompatButton);
         weekButton = (Button) findViewById(R.id.appCompatButton2);*/

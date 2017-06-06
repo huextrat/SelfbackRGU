@@ -93,6 +93,7 @@ public class ListenerService extends WearableListenerService implements GoogleAp
                     Date d = cal.getTime();
                     DbSteps newActivity = new DbSteps(d, stepcount);
                     managerSteps.insertNew(newActivity);
+                    this.sendBroadcast(new Intent().setAction("bcNewSteps"));
                 }
             } else if (event.getType() == DataEvent.TYPE_DELETED) {
                 // DataItem deleted
