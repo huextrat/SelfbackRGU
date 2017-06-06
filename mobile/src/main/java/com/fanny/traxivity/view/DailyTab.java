@@ -220,10 +220,6 @@ public class DailyTab extends Fragment {
         return v;
     }
 
-    private void dbUpdate() {
-
-    }
-
     public void clearDb() {
         Realm realm = Realm.getDefaultInstance();
         realm.beginTransaction();

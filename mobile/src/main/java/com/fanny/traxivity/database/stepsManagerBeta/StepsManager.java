@@ -43,10 +43,18 @@ public class StepsManager {
             secondAddedActivity = new DbSteps(new Date(),0);
         }
 
-        if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
+
+        if(mySteps.isSpecial()){
+            DbSteps newSteps = new DbSteps(mySteps.getStartTime(), mySteps.getEndTime(),mySteps.getNbSteps());
+
+            realm.beginTransaction();
+            DbSteps realmActivity = realm.copyToRealm(newSteps);
+            realm.commitTransaction();
+        }
+        else if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
             DbSteps updateSteps;
 
-            int stepsBefore = getTotalStepsDayForThisHouts(new Date(), mySteps.getHoursRange());
+            int stepsBefore = getTotalStepsDayForThisHours(new Date(), mySteps.getHoursRange());
             updateSteps = new DbSteps(lastAddedActivity.getStartTime(), mySteps.getNbSteps()-stepsBefore);
 
             realm.beginTransaction();
@@ -63,7 +71,7 @@ public class StepsManager {
             Date endTime = cal.getTime();
             cal.clear();
 
-            int stepsBefore = getTotalStepsDayForThisHouts(new Date(), mySteps.getId());
+            int stepsBefore = getTotalStepsDayForThisHours(new Date(), mySteps.getId());
             DbSteps newSteps = new DbSteps(mySteps.getStartTime(),mySteps.getNbSteps()-stepsBefore);
 
             newSteps.setStartTime(endTime);
@@ -100,12 +108,12 @@ public class StepsManager {
         return result;
     }
 
-    public int getTotalStepsDayForThisHouts(Date date, int hour){
+    public int getTotalStepsDayForThisHours(Date date, int hour){
         int result = 0;
         realm = Realm.getDefaultInstance();
         List<DbSteps> listDaySteps = getAllStepsDay(date);
         for(DbSteps steps : listDaySteps){
-            if(steps.getHoursRange() < hour) {
+            if(steps.getHoursRange() < hour && !steps.isSpecial()) {
                 result = result + steps.getNbSteps();
             }
         }

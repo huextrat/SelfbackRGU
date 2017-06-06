@@ -19,6 +19,8 @@ import android.widget.TextView;
 import com.fanny.traxivity.MainActivity;
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.admin.controller.ActivityConversionDAO;
+import com.fanny.traxivity.database.stepsManagerBeta.DbSteps;
+import com.fanny.traxivity.database.stepsManagerBeta.StepsManager;
 import com.fanny.traxivity.model.ActivityToSteps;
 import com.fanny.traxivity.dialogs.datePickerDialog;
 import com.fanny.traxivity.dialogs.timePickerDialog;
@@ -129,7 +131,7 @@ public class AddNewActivity extends AppCompatActivity {
                     activityToNbSteps = (float)task.getResult();
 
 
-                    ActivityManager managerActivity = new ActivityManager();
+                    StepsManager managerSteps = new StepsManager();
                     //------------------------------------------------
                     Calendar start = Calendar.getInstance(Locale.getDefault());
                     start.setTime(date);
@@ -145,8 +147,8 @@ public class AddNewActivity extends AppCompatActivity {
 
                     Log.d("test",activityToNbSteps+"");
 
-                    DbActivity newActivity = new DbActivity(start.getTime(),end.getTime(),sp_activityList.getSelectedItem().toString(),activityToNbSteps*((nbHours*60)+(nbMinutes)));
-                    managerActivity.insertActivity(newActivity);
+                    DbSteps newSteps = new DbSteps(start.getTime(),end.getTime(),(int)activityToNbSteps*((nbHours*60)+(nbMinutes)));
+                    managerSteps.insertNew(newSteps);
                 }
                 else{
                     Exception e = task.getException();
