@@ -19,10 +19,12 @@ import io.realm.Sort;
 
 public class StepsManager {
     private Realm realm;
+    private boolean flag = false;
 
     public void insertNew(DbSteps mySteps) {
         List<DbSteps> lastAddedActivityList = new ArrayList<>();
         DbSteps lastAddedActivity;
+        DbSteps secondAddedActivity;
 
         realm = Realm.getDefaultInstance();
 
@@ -34,9 +36,18 @@ public class StepsManager {
         }
         lastAddedActivity = lastAddedActivityList.get(0);
 
-        if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
+        if(lastAddedActivityList.size() > 1 && lastAddedActivityList.get(1) != null) {
+            secondAddedActivity = lastAddedActivityList.get(1);
+        }
+        else {
+            secondAddedActivity = new DbSteps(new Date(),0);
+        }
 
-            DbSteps updateSteps = new DbSteps(lastAddedActivity.getStartTime(),mySteps.getNbSteps());
+        if(mySteps.getHoursRange() == lastAddedActivity.getHoursRange()) {
+            DbSteps updateSteps;
+
+            int stepsBefore = getTotalStepsDayForThisHouts(new Date(), mySteps.getHoursRange());
+            updateSteps = new DbSteps(lastAddedActivity.getStartTime(), mySteps.getNbSteps()-stepsBefore);
 
             realm.beginTransaction();
             removeLastActivity();
@@ -52,13 +63,16 @@ public class StepsManager {
             Date endTime = cal.getTime();
             cal.clear();
 
-            DbSteps newSteps = new DbSteps(mySteps.getStartTime(),mySteps.getNbSteps()-getTotalStepsDay(endTime));
+            int stepsBefore = getTotalStepsDayForThisHouts(new Date(), mySteps.getId());
+            DbSteps newSteps = new DbSteps(mySteps.getStartTime(),mySteps.getNbSteps()-stepsBefore);
 
             newSteps.setStartTime(endTime);
 
             realm.beginTransaction();
             DbSteps realmActivity = realm.copyToRealm(newSteps);
             realm.commitTransaction();
+
+            flag = true;
         }
         else {
             return;
@@ -82,6 +96,18 @@ public class StepsManager {
         List<DbSteps> listDaySteps = getAllStepsDay(date);
         for(DbSteps steps : listDaySteps){
             result = result + steps.getNbSteps();
+        }
+        return result;
+    }
+
+    public int getTotalStepsDayForThisHouts(Date date, int hour){
+        int result = 0;
+        realm = Realm.getDefaultInstance();
+        List<DbSteps> listDaySteps = getAllStepsDay(date);
+        for(DbSteps steps : listDaySteps){
+            if(steps.getHoursRange() < hour) {
+                result = result + steps.getNbSteps();
+            }
         }
         return result;
     }
