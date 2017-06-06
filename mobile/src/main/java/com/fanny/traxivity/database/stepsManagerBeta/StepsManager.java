@@ -19,12 +19,10 @@ import io.realm.Sort;
 
 public class StepsManager {
     private Realm realm;
-    private boolean flag = false;
 
     public void insertNew(DbSteps mySteps) {
         List<DbSteps> lastAddedActivityList = new ArrayList<>();
         DbSteps lastAddedActivity;
-        DbSteps secondAddedActivity;
 
         realm = Realm.getDefaultInstance();
 
@@ -35,13 +33,6 @@ public class StepsManager {
             lastAddedActivityList.add(new DbSteps(new Date(),0));
         }
         lastAddedActivity = lastAddedActivityList.get(0);
-
-        if(lastAddedActivityList.size() > 1 && lastAddedActivityList.get(1) != null) {
-            secondAddedActivity = lastAddedActivityList.get(1);
-        }
-        else {
-            secondAddedActivity = new DbSteps(new Date(),0);
-        }
 
 
         if(mySteps.isSpecial()){
@@ -73,16 +64,13 @@ public class StepsManager {
             Date endTime = cal.getTime();
             cal.clear();
 
-            int stepsBefore = getTotalStepsDayForThisHours(new Date(), mySteps.getId());
-            DbSteps newSteps = new DbSteps(mySteps.getStartTime(),mySteps.getNbSteps()-stepsBefore);
-
+            int stepsBefore = getTotalStepsDayForThisHours(new Date(), mySteps.getHoursRange());
+            DbSteps newSteps = new DbSteps(mySteps.getStartTime(), mySteps.getNbSteps() - stepsBefore);
             newSteps.setStartTime(endTime);
 
             realm.beginTransaction();
             DbSteps realmActivity = realm.copyToRealm(newSteps);
             realm.commitTransaction();
-
-            flag = true;
         }
         else {
             return;
