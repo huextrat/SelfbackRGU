@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
- * Created by jbjourget on 19/05/2017.
+ * Created by jbjourget.
  */
 
 public class DateUtil {

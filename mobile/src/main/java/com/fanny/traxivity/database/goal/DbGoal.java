@@ -8,7 +8,7 @@ import io.realm.RealmObject;
 import io.realm.annotations.Required;
 
 /**
- * Created by huextrat.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public class DbGoal extends RealmObject {

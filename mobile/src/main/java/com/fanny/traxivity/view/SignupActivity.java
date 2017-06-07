@@ -21,7 +21,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.fanny.traxivity.R;
 
-
+/**
+ * Created by huextrat <www.hugoextrat.com>.
+ */
 public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDataBase;

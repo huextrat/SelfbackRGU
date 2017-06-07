@@ -21,6 +21,7 @@ import com.fanny.traxivity.model.SlidingTabLayout;
 import com.fanny.traxivity.model.ViewPagerAdapter;
 import com.fanny.traxivity.view.GoalInputActivity;
 import com.fanny.traxivity.view.LoginActivity;
+import com.fanny.traxivity.view.SettingsActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -29,9 +30,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
-import java.util.Observer;
-
 import io.realm.Realm;
+
+/**
+ * Created by huextrat <www.hugoextrat.com>.
+ */
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -47,7 +50,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
 
         Realm.init(this);
-
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -152,7 +154,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_settings) {
-            //TODO: SETTINGS
+            startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
         }
         else if (id == R.id.new_goal) {
             startActivity(new Intent(getApplicationContext(), GoalInputActivity.class));

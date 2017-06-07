@@ -22,7 +22,7 @@ import io.realm.Sort;
 
 
 /**
- * Created by huextrat.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public class ActivityManager {

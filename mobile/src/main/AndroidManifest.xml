@@ -38,6 +38,9 @@
             android:name=".view.InactivityGoalInput"
             android:theme="@style/AppTheme" />
         <activity
+            android:name=".view.SettingsActivity"
+            android:theme="@style/AppTheme" />
+        <activity
             android:name=".admin.view.activities.MainMenu"
             android:theme="@style/AppTheme" />
         <activity

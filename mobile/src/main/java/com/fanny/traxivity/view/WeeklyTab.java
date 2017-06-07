@@ -1,8 +1,5 @@
 package com.fanny.traxivity.view;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+
 import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,16 +7,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import com.fanny.traxivity.database.activity.ActivityManager;
 import com.fanny.traxivity.database.goal.DbGoal;
 import com.fanny.traxivity.database.goal.GoalManager;
 import com.fanny.traxivity.database.inactivity.InactivityManager;
 import com.fanny.traxivity.database.stepsManagerBeta.StepsManager;
 import com.fanny.traxivity.model.DateUtil;
 import com.fanny.traxivity.model.MyXAxisValueFormatterDays;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.LimitLine;
 import com.github.mikephil.charting.components.XAxis;
@@ -33,7 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 /**
- * Created by huextrat.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 public class WeeklyTab extends Fragment {
     private StepsManager managerSteps;

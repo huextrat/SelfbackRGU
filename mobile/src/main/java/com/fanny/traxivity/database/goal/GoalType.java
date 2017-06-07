@@ -3,7 +3,7 @@ package com.fanny.traxivity.database.goal;
 import io.realm.RealmModel;
 
 /**
- * Created by extra on 16/05/2017.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public enum GoalType implements RealmModel {

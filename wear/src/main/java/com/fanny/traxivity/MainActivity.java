@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.Date;
 
 public class MainActivity extends WearableActivity implements SensorEventListener{
 
@@ -73,6 +74,7 @@ public class MainActivity extends WearableActivity implements SensorEventListene
     private int stepDiff;
     private long sendDate;
 
+    private Date lastDate = new Date();
 
 
     /**
@@ -204,13 +206,21 @@ public class MainActivity extends WearableActivity implements SensorEventListene
         System.out.println("Step count before: "+stepCount);
 
         long currentTime = System.currentTimeMillis();
-        System.out.println("Last update: "+lastUpdate/(1000 * 60 * 60 * 24l));
-        System.out.println("Current Time: "+currentTime/(1000 * 60 * 60 * 24l));
-        if (lastUpdate/(1000 * 60 * 60 * 24l) < currentTime/(1000 * 60 * 60 * 24l)){
-            Log.d(TAG,"Entrée du if");
+
+        Date currentDate = new Date();
+        currentDate.setTime(currentTime);
+
+        System.out.println("Last update: "+ lastDate.toString());
+        System.out.println("Current Time: "+ currentDate.toString());
+
+        //System.out.println("Last update: "+lastUpdate/(1000 * 60 * 60 * 24l));
+        //System.out.println("Current Time: "+currentTime/(1000 * 60 * 60 * 24l));
+        //if (lastUpdate/(1000 * 60 * 60 * 24l) < currentTime/(1000 * 60 * 60 * 24l)){
+        if (lastDate.getDate() != currentDate.getDate()){
             stepDiff = stepCount;
-            gStepCount = stepCount - stepDiff;
             saveStepCount(gStepCount, stepDiff, currentTime);
+
+            lastDate = currentDate;
             lastUpdate = currentTime;
         }
 

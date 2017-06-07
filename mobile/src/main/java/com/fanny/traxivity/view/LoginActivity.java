@@ -24,6 +24,9 @@ import com.fanny.traxivity.R;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
+/**
+ * Created by huextrat <www.hugoextrat.com>.
+ */
 
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;

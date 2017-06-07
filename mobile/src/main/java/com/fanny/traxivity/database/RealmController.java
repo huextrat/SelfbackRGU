@@ -8,7 +8,7 @@ import android.content.Context;
 import io.realm.Realm;
 
 /**
- * Created by huextrat.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public class RealmController {

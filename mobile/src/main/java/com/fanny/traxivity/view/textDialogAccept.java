@@ -29,7 +29,7 @@ import java.util.Random;
 import io.realm.Realm;
 
 /**
- * Created by jbjourget on 02/05/2017.
+ * Created by jbjourget.
  */
 
 public class textDialogAccept extends DialogFragment {

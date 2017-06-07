@@ -2,7 +2,7 @@ package com.fanny.traxivity.model;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 /**
- * Created by jbjourget on 06/06/2017.
+ * Created by jbjourget.
  */
 public class MyXAxisValueFormatterDays implements IAxisValueFormatter {
     private String[] mValues;

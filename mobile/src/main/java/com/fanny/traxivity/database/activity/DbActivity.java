@@ -5,7 +5,7 @@ import java.util.Date;
 import io.realm.RealmObject;
 
 /**
- * Created by huextrat.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public class DbActivity extends RealmObject {

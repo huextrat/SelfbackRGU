@@ -26,6 +26,8 @@ import java.util.Date;
 import java.util.Observable;
 import java.util.Observer;
 
+import io.realm.Realm;
+
 /**
  * Listen to the changes in the Data Layer Event, used to send the collected data from the wear to the mobile
  */
@@ -50,6 +52,8 @@ public class ListenerService extends WearableListenerService implements GoogleAp
     @Override
     public void onCreate() {
         super.onCreate();
+
+        Realm.init(getApplicationContext());
 
         try {
             Class.forName("android.os.AsyncTask");

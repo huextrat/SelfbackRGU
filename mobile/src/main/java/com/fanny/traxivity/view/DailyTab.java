@@ -48,7 +48,7 @@ import at.grabner.circleprogress.UnitPosition;
 import io.realm.Realm;
 
 /**
- * Created by huextrat.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public class DailyTab extends Fragment {
@@ -102,12 +102,7 @@ public class DailyTab extends Fragment {
         broadCastNewMessage = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-                dailyCircle.setUnit("");
-                dailyCircle.setAutoTextSize(true);
-                dailyCircle.setUnitVisible(false);
-                dailyCircle.setTextMode(TextMode.TEXT);
-                dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
+                updateCircleStepsText();
 
                 entries.clear();
                 set.clear();
@@ -143,24 +138,10 @@ public class DailyTab extends Fragment {
                  @Override
                  public void onClick(View v) {
                      if(dailyCircle.getUnit().equals(" %")){
-                         dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-                         dailyCircle.setUnit("");
-                         dailyCircle.setAutoTextSize(true);
-                         dailyCircle.setUnitVisible(false);
-                         dailyCircle.setTextMode(TextMode.TEXT);
-                         dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
+                         updateCircleStepsText();
                      }
                      else {
-                         dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-                         dailyCircle.setTextMode(TextMode.PERCENT);
-                         dailyCircle.setUnitSize(200);
-                         dailyCircle.setAutoTextSize(true);
-                         dailyCircle.setUnit(" %");
-                         dailyCircle.setUnitColor(getResources().getColor(R.color.colorPrimary));
-                         dailyCircle.setUnitVisible(true);
-                         dailyCircle.setUnitScale(1);
-                         dailyCircle.setUnitPosition(UnitPosition.RIGHT_TOP);
-                         dailyCircle.setText(String.valueOf(managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate))));
+                         updateCircleStepsPercent();
                      }
                  }
              });
@@ -279,6 +260,28 @@ public class DailyTab extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         getActivity().unregisterReceiver(broadCastNewMessage);
+    }
+
+    public void updateCircleStepsText(){
+        dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
+        dailyCircle.setUnit("");
+        dailyCircle.setAutoTextSize(true);
+        dailyCircle.setUnitVisible(false);
+        dailyCircle.setTextMode(TextMode.TEXT);
+        dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
+    }
+
+    public void updateCircleStepsPercent(){
+        dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
+        dailyCircle.setTextMode(TextMode.PERCENT);
+        dailyCircle.setUnitSize(200);
+        dailyCircle.setAutoTextSize(true);
+        dailyCircle.setUnit(" %");
+        dailyCircle.setUnitColor(getResources().getColor(R.color.colorPrimary));
+        dailyCircle.setUnitVisible(true);
+        dailyCircle.setUnitScale(1);
+        dailyCircle.setUnitPosition(UnitPosition.RIGHT_TOP);
+        dailyCircle.setText(String.valueOf(managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate))));
     }
 
 }

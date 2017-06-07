@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 /**
- * Created by jbjourget on 09/05/2017.
+ * Created by jbjourget.
  */
 
 public class textDialogInactivity extends DialogFragment {

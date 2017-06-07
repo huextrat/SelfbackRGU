@@ -15,6 +15,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.fanny.traxivity.R;
 
+/**
+ * Created by huextrat <www.hugoextrat.com>.
+ */
 
 public class ResetActivity extends AppCompatActivity {
     private static final int REQUEST_RESET = 0;

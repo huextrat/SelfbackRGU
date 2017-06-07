@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by extra on 30/05/2017.
+ * Created by huextrat <www.hugoextrat.com>.
  */
 
 public class AddNewActivity extends AppCompatActivity {
@@ -191,6 +191,9 @@ public class AddNewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DialogFragment newFragment = new timePickerDialog();
+                Bundle args = new Bundle();
+                args.putString("key", "newActivity");
+                newFragment.setArguments(args);
                 newFragment.show(getFragmentManager(), "timePicker");
             }
         });

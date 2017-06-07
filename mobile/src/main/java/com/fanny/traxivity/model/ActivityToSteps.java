@@ -1,7 +1,7 @@
 package com.fanny.traxivity.model;
 
 /**
- * Created by Alexandre on 17/05/2017.
+ * Created by almabire.
  */
 
 public class ActivityToSteps {
