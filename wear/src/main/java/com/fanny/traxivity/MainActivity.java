@@ -218,6 +218,7 @@ public class MainActivity extends WearableActivity implements SensorEventListene
         //if (lastUpdate/(1000 * 60 * 60 * 24l) < currentTime/(1000 * 60 * 60 * 24l)){
         if (lastDate.getDate() != currentDate.getDate()){
             stepDiff = stepCount;
+            gStepCount = stepCount-stepDiff;
             saveStepCount(gStepCount, stepDiff, currentTime);
 
             lastDate = currentDate;
