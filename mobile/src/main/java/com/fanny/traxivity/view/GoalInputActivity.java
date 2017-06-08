@@ -23,6 +23,7 @@ import com.fanny.traxivity.MainActivity;
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.admin.controller.InformationDAO;
 import com.fanny.traxivity.admin.model.Information;
+import com.fanny.traxivity.dialogs.textDialogAccept;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;

@@ -64,10 +64,22 @@ public class DayTimingManager {
         return realm.copyFromRealm(results);
     }
 
+    public DbTiming getTimingStartFirst() {
+        realm = Realm.getDefaultInstance();
+        DbTiming results = realm.where(DbTiming.class).equalTo("name","start").findFirst();
+        return results;
+    }
+
     public List<DbTiming> getTimingMid() {
         realm = Realm.getDefaultInstance();
         RealmResults<DbTiming> results = realm.where(DbTiming.class).equalTo("name","mid").findAll();
         return realm.copyFromRealm(results);
+    }
+
+    public DbTiming getTimingMidFirst() {
+        realm = Realm.getDefaultInstance();
+        DbTiming results = realm.where(DbTiming.class).equalTo("name","mid").findFirst();
+        return results;
     }
 
     public List<DbTiming> getTimingEnd() {
@@ -76,13 +88,19 @@ public class DayTimingManager {
         return realm.copyFromRealm(results);
     }
 
-    public void removeTimingStart(){
+    public DbTiming getTimingEndFirst() {
+        realm = Realm.getDefaultInstance();
+        DbTiming results = realm.where(DbTiming.class).equalTo("name","end").findFirst();
+        return results;
+    }
+
+    private void removeTimingStart(){
         realm.where(DbTiming.class).equalTo("name", "start").findAll().deleteAllFromRealm();
     }
-    public void removeTimingMid(){
+    private void removeTimingMid(){
         realm.where(DbTiming.class).equalTo("name", "mid").findAll().deleteAllFromRealm();
     }
-    public void removeTimingEnd(){
+    private void removeTimingEnd(){
         realm.where(DbTiming.class).equalTo("name", "end").findAll().deleteAllFromRealm();
     }
 }

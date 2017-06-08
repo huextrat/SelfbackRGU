@@ -1,4 +1,4 @@
-package com.fanny.traxivity.view;
+package com.fanny.traxivity.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,6 +18,7 @@ import com.fanny.traxivity.admin.controller.ConfirmationDAO;
 import com.fanny.traxivity.admin.model.Confirmation;
 import com.fanny.traxivity.database.inactivity.DbInactivity;
 import com.fanny.traxivity.database.inactivity.InactivityManager;
+import com.fanny.traxivity.view.InactivityGoalInput;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;

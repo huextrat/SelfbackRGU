@@ -1,4 +1,4 @@
-package com.fanny.traxivity.view;
+package com.fanny.traxivity.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.DatePicker;
 
 import com.fanny.traxivity.R;
+import com.fanny.traxivity.view.GoalInputActivity;
 
 import java.text.DateFormat;
 import java.util.Calendar;
