@@ -67,7 +67,7 @@ public class DailyTab extends Fragment {
         View v = inflater.inflate(R.layout.daily_tab,container,false);
 
         dailyCircle = (CircleProgressView)v.findViewById(R.id.circleView);
-        dailyCircle.setBarColor(getResources().getColor(R.color.red), getResources().getColor(R.color.green));
+        dailyCircle.setBarColor(getResources().getColor(R.color.red), getResources().getColor(R.color.orange),getResources().getColor(R.color.green));
 
         Button clearDb = (Button) v.findViewById(R.id.button_clear);
         TextView dailyGoalTv = (TextView) v.findViewById(R.id.goal_daily);

@@ -37,7 +37,6 @@ public class StepsManager {
 
         Map<Integer, DbSteps> map = getAllActivityDayByHours(new Date());
 
-
         if(mySteps.isSpecial()){
             DbSteps newSteps = new DbSteps(mySteps.getStartTime(), mySteps.getEndTime(),mySteps.getNbSteps());
 
