@@ -1,12 +1,13 @@
 package com.fanny.traxivity.database.stepsManagerBeta;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Observable;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -36,6 +37,7 @@ public class StepsManager {
 
         Map<Integer, DbSteps> map = getAllActivityDayByHours(new Date());
 
+
         if(mySteps.isSpecial()){
             DbSteps newSteps = new DbSteps(mySteps.getStartTime(), mySteps.getEndTime(),mySteps.getNbSteps());
 
@@ -57,6 +59,10 @@ public class StepsManager {
             realm.commitTransaction();
         }
         else if(mySteps.getHoursRange() != lastAddedActivity.getHoursRange() && !map.containsKey(mySteps.getHoursRange())){
+            map = getAllActivityDayByHours(new Date());
+            if(map.containsKey(mySteps.getHoursRange())){
+                removeLastActivity();
+            }
             Calendar cal = Calendar.getInstance();
             cal.setTime(mySteps.getStartTime());
             cal.add(Calendar.HOUR, 0);
