@@ -12,10 +12,12 @@ import android.widget.TimePicker;
 import com.fanny.traxivity.R;
 import com.fanny.traxivity.database.dayTiming.DayTimingManager;
 import com.fanny.traxivity.database.dayTiming.DbTiming;
+import com.fanny.traxivity.model.SetAlarm;
 import com.fanny.traxivity.view.AddNewActivity;
 import com.fanny.traxivity.view.SettingsActivity;
 
 import java.util.Calendar;
+import java.util.Set;
 
 /**
  * Created by almabire.
@@ -57,6 +59,9 @@ public class timePickerDialog extends DialogFragment
                 DbTiming timingStart = new DbTiming("start",hourOfDay,minute);
                 managerTiming.insertTiming(timingStart);
                 tv_start.setText(hourOfDay+":"+minute);
+
+                SetAlarm.alarm.cancelAlarm(view.getContext());
+                SetAlarm.setAlarmStart(view.getContext());
                 break;
             case "mid":
                 TextView tv_mid = (TextView) getActivity().findViewById(R.id.tv_mid);
@@ -65,6 +70,9 @@ public class timePickerDialog extends DialogFragment
                 DbTiming timingMid = new DbTiming("mid",hourOfDay,minute);
                 managerTiming.insertTiming(timingMid);
                 tv_mid.setText(hourOfDay+":"+minute);
+
+                SetAlarm.alarm.cancelAlarm(view.getContext());
+                SetAlarm.setAlarmMid(view.getContext());
                 break;
             case "end":
                 TextView tv_end = (TextView) getActivity().findViewById(R.id.tv_end);
@@ -73,6 +81,9 @@ public class timePickerDialog extends DialogFragment
                 DbTiming timingEnd = new DbTiming("end",hourOfDay,minute);
                 managerTiming.insertTiming(timingEnd);
                 tv_end.setText(hourOfDay+":"+minute);
+
+                SetAlarm.alarm3.cancelAlarm(view.getContext());
+                SetAlarm.setAlarmEnd(view.getContext());
                 break;
         }
     }

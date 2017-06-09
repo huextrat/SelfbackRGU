@@ -64,9 +64,9 @@ public class DailyTab extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.daily_tab,container,false);
+        View v = inflater.inflate(R.layout.daily_tab, container, false);
 
-        dailyCircle = (CircleProgressView)v.findViewById(R.id.circleView);
+        dailyCircle = (CircleProgressView) v.findViewById(R.id.circleView);
         dailyCircle.setBarColor(getResources().getColor(R.color.red), getResources().getColor(R.color.orange), getResources().getColor(R.color.green));
 
         Button clearDb = (Button) v.findViewById(R.id.button_clear);
@@ -106,19 +106,19 @@ public class DailyTab extends Fragment {
 
                 entries.clear();
                 set.clear();
-                yAxisR.setAxisMaximum(dailyGoalSteps.getStepsNumber()*2f);
+                yAxisR.setAxisMaximum(dailyGoalSteps.getStepsNumber() * 2f);
                 Integer nbsteps;
                 Map<Integer, Integer> mapStepsDayByHour = managerSteps.getTotalStepsDayByHours(currentDate);
-                for(Integer i=0;i<24;i++) {
+                for (Integer i = 0; i < 24; i++) {
                     nbsteps = mapStepsDayByHour.get(i);
 
-                    if(nbsteps == null) {
+                    if (nbsteps == null) {
                         entries.add(new BarEntry((float) i, 0f));
-                        Log.w("Nbsteps",i.toString());
+                        Log.w("Nbsteps", i.toString());
 
-                    }else {
+                    } else {
                         entries.add(new BarEntry((float) i, (float) nbsteps));
-                        Log.w("Nbsteps",nbsteps.toString());
+                        Log.w("Nbsteps", nbsteps.toString());
                     }
                 }
                 set = new BarDataSet(entries, "Steps");
@@ -128,98 +128,94 @@ public class DailyTab extends Fragment {
 
         getActivity().registerReceiver(broadCastNewMessage, new IntentFilter("bcNewSteps"));
 
-         if (dailyGoalSteps != null) {
-             dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-             dailyCircle.setTextMode(TextMode.TEXT);
-             dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
+        if (dailyGoalSteps != null) {
+            dailyCircle.setValueAnimated(0, managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)), 2000);
+            dailyCircle.setTextMode(TextMode.TEXT);
+            dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate) + " steps");
 
-             dailyCircle.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     if(dailyCircle.getUnit().equals(" %")){
-                         updateCircleStepsText();
-                     }
-                     else {
-                         updateCircleStepsPercent();
-                     }
-                 }
-             });
+            dailyCircle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dailyCircle.getUnit().equals(" %")) {
+                        updateCircleStepsText();
+                    } else {
+                        updateCircleStepsPercent();
+                    }
+                }
+            });
 
-             dailyGoalTv.setText(dailyGoalSteps.getStepsNumber() + " steps");
-             yAxisR.setAxisMaximum(dailyGoalSteps.getStepsNumber()*2f);
+            dailyGoalTv.setText(dailyGoalSteps.getStepsNumber() + " steps");
+            yAxisR.setAxisMaximum(dailyGoalSteps.getStepsNumber() * 2f);
 
-             Integer nbsteps;
-             Map<Integer, Integer> mapStepsDayByHour = managerSteps.getTotalStepsDayByHours(currentDate);
-             for(Integer i=0;i<24;i++) {
-                 nbsteps = mapStepsDayByHour.get(i);
+            Integer nbsteps;
+            Map<Integer, Integer> mapStepsDayByHour = managerSteps.getTotalStepsDayByHours(currentDate);
+            for (Integer i = 0; i < 24; i++) {
+                nbsteps = mapStepsDayByHour.get(i);
 
-                 if(nbsteps == null) {
-                     entries.add(new BarEntry((float) i, 0f));
-                     Log.w("Nbsteps",i.toString());
+                if (nbsteps == null) {
+                    entries.add(new BarEntry((float) i, 0f));
+                    Log.w("Nbsteps", i.toString());
 
-                 }else {
-                     entries.add(new BarEntry((float) i, (float) nbsteps));
-                     Log.w("Nbsteps",nbsteps.toString());
-                 }
-             }
-             set = new BarDataSet(entries, "Steps");
-         }
-         else if(dailyGoalDuration != null){
-             dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
-             dailyCircle.setTextMode(TextMode.TEXT);
-             dailyCircle.setText(managerActivity.getTotalStepsDay(currentDate)+" steps");
-             dailyCircle.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     if(dailyCircle.getUnit().equals(" %")){
-                         dailyCircle.setValueAnimated(0,managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate)),2000);
-                         dailyCircle.setUnit("");
-                         dailyCircle.setTextSize(100);
-                         dailyCircle.setUnitVisible(false);
-                         dailyCircle.setValueAnimated(0,managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate)),2000);
-                         dailyCircle.setTextMode(TextMode.TEXT);
-                         dailyCircle.setText(managerActivity.getTotalStepsDay(currentDate)+" seconds");
-                     }
-                     else {
-                         dailyCircle.setValueAnimated(0,managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate)),2000);
-                         dailyCircle.setTextMode(TextMode.PERCENT);
-                         dailyCircle.setUnitSize(200);
-                         dailyCircle.setAutoTextSize(true);
-                         dailyCircle.setUnit(" %");
-                         dailyCircle.setUnitColor(getResources().getColor(R.color.colorPrimary));
-                         dailyCircle.setUnitVisible(true);
-                         dailyCircle.setUnitScale(1);
-                         dailyCircle.setUnitPosition(UnitPosition.RIGHT_TOP);
-                         dailyCircle.setText(String.valueOf(managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate))));
-                     }
-                 }
-             });
-             dailyGoalTv.setText(dailyGoalSteps.getStepsNumber() + " seconds");
+                } else {
+                    entries.add(new BarEntry((float) i, (float) nbsteps));
+                    Log.w("Nbsteps", nbsteps.toString());
+                }
+            }
+            set = new BarDataSet(entries, "Steps");
+        } else if (dailyGoalDuration != null) {
+            dailyCircle.setValueAnimated(0, managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)), 2000);
+            dailyCircle.setTextMode(TextMode.TEXT);
+            dailyCircle.setText(managerActivity.getTotalStepsDay(currentDate) + " steps");
+            dailyCircle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dailyCircle.getUnit().equals(" %")) {
+                        dailyCircle.setValueAnimated(0, managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate)), 2000);
+                        dailyCircle.setUnit("");
+                        dailyCircle.setTextSize(100);
+                        dailyCircle.setUnitVisible(false);
+                        dailyCircle.setValueAnimated(0, managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate)), 2000);
+                        dailyCircle.setTextMode(TextMode.TEXT);
+                        dailyCircle.setText(managerActivity.getTotalStepsDay(currentDate) + " seconds");
+                    } else {
+                        dailyCircle.setValueAnimated(0, managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate)), 2000);
+                        dailyCircle.setTextMode(TextMode.PERCENT);
+                        dailyCircle.setUnitSize(200);
+                        dailyCircle.setAutoTextSize(true);
+                        dailyCircle.setUnit(" %");
+                        dailyCircle.setUnitColor(getResources().getColor(R.color.colorPrimary));
+                        dailyCircle.setUnitVisible(true);
+                        dailyCircle.setUnitScale(1);
+                        dailyCircle.setUnitPosition(UnitPosition.RIGHT_TOP);
+                        dailyCircle.setText(String.valueOf(managerGoal.goalStatusDurationDaily(currentDate, managerActivity.getTotalActivityDay(currentDate))));
+                    }
+                }
+            });
+            dailyGoalTv.setText(dailyGoalSteps.getStepsNumber() + " seconds");
 
-             yAxisR.setAxisMaximum((float)dailyGoalDuration.getDuration()*2f);
+            yAxisR.setAxisMaximum((float) dailyGoalDuration.getDuration() * 2f);
 
-             Integer activityTime;
-             Map<Integer, Integer> mapTimeDayByHour = managerSteps.getTotalStepsDayByHours(currentDate);
-             for(Integer i=0;i<24;i++) {
-                 activityTime = mapTimeDayByHour.get(i);
+            Integer activityTime;
+            Map<Integer, Integer> mapTimeDayByHour = managerSteps.getTotalStepsDayByHours(currentDate);
+            for (Integer i = 0; i < 24; i++) {
+                activityTime = mapTimeDayByHour.get(i);
 
-                 if(activityTime == null) {
-                     entries.add(new BarEntry((float) i, 0f));
-                     Log.w("Nbsteps",i.toString());
+                if (activityTime == null) {
+                    entries.add(new BarEntry((float) i, 0f));
+                    Log.w("Nbsteps", i.toString());
 
-                 }else {
-                     entries.add(new BarEntry((float) i, (float) activityTime));
-                     Log.w("Nbsteps",activityTime.toString());
-                 }
-             }
+                } else {
+                    entries.add(new BarEntry((float) i, (float) activityTime));
+                    Log.w("Nbsteps", activityTime.toString());
+                }
+            }
 
-             set = new BarDataSet(entries, "Time");
-         }
-         else {
-             dailyGoalTv.setText("No goal set");
-             set = new BarDataSet(entries, "Activity");
-             yAxisR.setAxisMaximum(10000f);
-         }
+            set = new BarDataSet(entries, "Time");
+        } else {
+            dailyGoalTv.setText("No goal set");
+            set = new BarDataSet(entries, "Activity");
+            yAxisR.setAxisMaximum(10000f);
+        }
 
 
         clearDb.setOnClickListener(new View.OnClickListener() {
@@ -232,8 +228,8 @@ public class DailyTab extends Fragment {
         StepsManager manager = new StepsManager();
 
         List<DbSteps> list = manager.getAllActivityDay(currentDate);
-        for(DbSteps steps : list){
-            Log.d("test", steps.getStartTime()+" - "+steps.getNbSteps());
+        for (DbSteps steps : list) {
+            Log.d("test", steps.getStartTime() + " - " + steps.getNbSteps());
         }
 
         BarData data = new BarData(set);
@@ -261,17 +257,17 @@ public class DailyTab extends Fragment {
         getActivity().unregisterReceiver(broadCastNewMessage);
     }
 
-    public void updateCircleStepsText(){
-        dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
+    public void updateCircleStepsText() {
+        dailyCircle.setValueAnimated(0, managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)), 2000);
         dailyCircle.setUnit("");
         dailyCircle.setAutoTextSize(true);
         dailyCircle.setUnitVisible(false);
         dailyCircle.setTextMode(TextMode.TEXT);
-        dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate)+" steps");
+        dailyCircle.setText(managerSteps.getTotalStepsDay(currentDate) + " steps");
     }
 
-    public void updateCircleStepsPercent(){
-        dailyCircle.setValueAnimated(0,managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)),2000);
+    public void updateCircleStepsPercent() {
+        dailyCircle.setValueAnimated(0, managerGoal.goalStatusStepsDaily(currentDate, managerSteps.getTotalStepsDay(currentDate)), 2000);
         dailyCircle.setTextMode(TextMode.PERCENT);
         dailyCircle.setUnitSize(200);
         dailyCircle.setAutoTextSize(true);

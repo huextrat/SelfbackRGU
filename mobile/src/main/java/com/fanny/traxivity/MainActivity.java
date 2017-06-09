@@ -15,6 +15,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.fanny.traxivity.database.dayTiming.DayTimingManager;
+import com.fanny.traxivity.database.dayTiming.DbTiming;
+import com.fanny.traxivity.model.Alarm;
+import com.fanny.traxivity.model.SetAlarm;
 import com.fanny.traxivity.view.AddNewActivity;
 import com.fanny.traxivity.admin.view.activities.MainMenu;
 import com.fanny.traxivity.model.SlidingTabLayout;
@@ -30,6 +34,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Set;
+
 import io.realm.Realm;
 
 /**
@@ -101,6 +108,8 @@ public class MainActivity extends AppCompatActivity
 
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
+
+        SetAlarm.setAlarm(this);
 
         username = (TextView) hView.findViewById(R.id.username);
         email = (TextView) hView.findViewById(R.id.email);
