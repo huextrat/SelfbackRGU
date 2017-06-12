@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.fanny.traxivity.database.activity.ActivityManager;
 import com.fanny.traxivity.database.activity.DbActivity;
+import com.fanny.traxivity.database.dayTiming.DbTiming;
 import com.fanny.traxivity.database.goal.DbGoal;
 import com.fanny.traxivity.database.goal.GoalManager;
 import com.fanny.traxivity.database.inactivity.DbInactivity;
@@ -104,8 +105,12 @@ public class DailyTab extends Fragment {
             public void onReceive(Context context, Intent intent) {
                 updateCircleStepsText();
 
-                entries.clear();
-                set.clear();
+                if(!entries.isEmpty()) {
+                    entries.clear();
+                }
+                if(set != null) {
+                    set.clear();
+                }
                 yAxisR.setAxisMaximum(dailyGoalSteps.getStepsNumber() * 2f);
                 Integer nbsteps;
                 Map<Integer, Integer> mapStepsDayByHour = managerSteps.getTotalStepsDayByHours(currentDate);
@@ -248,6 +253,7 @@ public class DailyTab extends Fragment {
         realm.delete(DbGoal.class);
         realm.delete(DbInactivity.class);
         realm.delete(DbSteps.class);
+        realm.delete(DbTiming.class);
         realm.commitTransaction();
     }
 
