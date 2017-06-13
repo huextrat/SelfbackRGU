@@ -70,7 +70,7 @@ public class DailyTab extends Fragment {
         dailyCircle = (CircleProgressView) v.findViewById(R.id.circleView);
         dailyCircle.setBarColor(getResources().getColor(R.color.red), getResources().getColor(R.color.orange), getResources().getColor(R.color.green));
 
-        Button clearDb = (Button) v.findViewById(R.id.button_clear);
+        //Button clearDb = (Button) v.findViewById(R.id.button_clear);
         TextView dailyGoalTv = (TextView) v.findViewById(R.id.goal_daily);
 
         currentDate = new Date();
@@ -223,12 +223,13 @@ public class DailyTab extends Fragment {
         }
 
 
-        clearDb.setOnClickListener(new View.OnClickListener() {
+       /** clearDb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 clearDb();
             }
         });
+        **/
 
         StepsManager manager = new StepsManager();
 
