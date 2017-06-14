@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         View hView =  navigationView.getHeaderView(0);
 
-        SetAlarm.setAlarm(this);
+        //SetAlarm.setAlarm(this);
 
         username = (TextView) hView.findViewById(R.id.username);
         email = (TextView) hView.findViewById(R.id.email);
