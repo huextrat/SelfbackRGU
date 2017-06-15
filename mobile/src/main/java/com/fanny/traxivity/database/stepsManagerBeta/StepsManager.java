@@ -114,8 +114,10 @@ public class StepsManager {
     }
 
     public List<DbSteps> getAllActivityDay(Date wantedDate) {
+        RealmResults<DbSteps> results = null;
         realm = Realm.getDefaultInstance();
-        RealmResults<DbSteps> results = realm.where(DbSteps.class).equalTo("id",wantedDate.getDate()).findAllSorted("startTime", Sort.DESCENDING);
+        results = realm.where(DbSteps.class).equalTo("id",wantedDate.getDate()).distinct("hoursRange");
+                //.findAllSorted("startTime", Sort.DESCENDING);
         return realm.copyFromRealm(results);
     }
 

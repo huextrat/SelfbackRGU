@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
 /**
  * Created by huextrat <www.hugoextrat.com>.
  */
@@ -32,6 +34,7 @@ public class WeeklyTab extends Fragment {
     private StepsManager managerSteps;
     private BarDataSet set;
     private Date dateImpl;
+    private Map<Integer, Integer> mapStepsDayByHour;
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.weekly_tab,container,false);
@@ -100,10 +103,13 @@ public class WeeklyTab extends Fragment {
             yAxisL.addLimitLine(limitLine);
             yAxisR.setAxisMaximum(stepsNumber*1.5f);
             yAxisL.setAxisMaximum(stepsNumber*1.5f);
-            int nbsteps;
             for(int i=0;i<7;i++) {
-                nbsteps = managerSteps.getTotalStepsDay(dateImpl);
-                entries.add(new BarEntry((float) i, (float) nbsteps));
+                int total = 0;
+                mapStepsDayByHour = managerSteps.getTotalStepsDayByHours(dateImpl);
+                for(Map.Entry<Integer, Integer> entry : mapStepsDayByHour.entrySet()){
+                    total = total + entry.getValue();
+                }
+                entries.add(new BarEntry((float) i, (float) total));
                /* inactivityDuration = (float) managerInactivity.getTotalInactivityDay(dateImpl);
                 inactivityDuration = inactivityDuration/3600f;
                 entries2.add(new BarEntry((float) i, inactivityDuration));*/
