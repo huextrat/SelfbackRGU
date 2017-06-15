@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.fanny.traxivity.MainActivity;
+import com.fanny.traxivity.model.Migration;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -47,10 +48,10 @@ public class LoginActivity extends AppCompatActivity {
         Realm.init(getApplicationContext());
         RealmConfiguration config = new RealmConfiguration.
                 Builder().
-                name(Realm.DEFAULT_REALM_NAME).
-                deleteRealmIfMigrationNeeded().
                 build();
+
         Realm.setDefaultConfiguration(config);
+        Realm.getInstance(config);
 
         _emailText = (EditText) findViewById(R.id.input_email);
         _passwordText = (EditText) findViewById(R.id.input_password);

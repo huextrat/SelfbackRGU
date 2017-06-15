@@ -147,16 +147,20 @@ public class StepsManager {
                     totalNbSteps = totalNbSteps + myActivity.getNbSteps();
                     lastActivityHoursRange = myActivity.getHoursRange();
                     listSize = listSize - 1;
-                    if(listSize == 0){
+                    if(listSize == 0 && totalNbSteps >= 0){
                         stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
                     }
                 } else {
-                    stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
+                    if(totalNbSteps >= 0) {
+                        stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
+                    }
                     lastActivityHoursRange = myActivity.getHoursRange();
                     totalNbSteps = myActivity.getNbSteps();
                     listSize = listSize - 1;
                     if(listSize == 0){
-                        stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
+                        if(totalNbSteps >= 0) {
+                            stepsDayByHours.put(lastActivityHoursRange, totalNbSteps);
+                        }
                     }
                 }
             }
